@@ -191,6 +191,34 @@ footer {{
     visibility: hidden;
 }}
 
+/* === Botão de colapsar/expandir sidebar — mais visível === */
+/* Quando sidebar está expandida: botão de colapso no topo */
+[data-testid="stSidebarCollapseButton"] button,
+button[kind="headerNoPadding"][data-testid="stBaseButton-headerNoPadding"] {{
+    background-color: {COLOR_PRIMARY} !important;
+    color: white !important;
+    border-radius: 50% !important;
+    width: 32px !important;
+    height: 32px !important;
+    box-shadow: 0 2px 6px rgba(30, 58, 95, 0.2) !important;
+    transition: all 0.2s ease !important;
+}}
+
+[data-testid="stSidebarCollapseButton"] button:hover,
+button[kind="headerNoPadding"][data-testid="stBaseButton-headerNoPadding"]:hover {{
+    background-color: {COLOR_PRIMARY_LIGHT} !important;
+    transform: scale(1.05);
+}}
+
+/* Quando sidebar colapsada: botão flutuante para abrir */
+[data-testid="stSidebarCollapsedControl"] button {{
+    background-color: {COLOR_PRIMARY} !important;
+    color: white !important;
+    border-radius: 0 8px 8px 0 !important;
+    padding: 8px 12px !important;
+    box-shadow: 2px 2px 8px rgba(30, 58, 95, 0.25) !important;
+}}
+
 /* === Reduz padding superior do main pra dar mais respiro === */
 .main .block-container {{
     padding-top: 2rem !important;

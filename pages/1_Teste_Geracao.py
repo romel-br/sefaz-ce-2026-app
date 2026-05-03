@@ -33,7 +33,7 @@ from modules.version import get_build_info
 
 st.set_page_config(
     page_title="Teste de Geração — Riri Auditora",
-    page_icon="📖",
+    page_icon="🧪",
     layout="wide",
 )
 

@@ -28,9 +28,9 @@ from modules.version import get_build_info
 
 st.set_page_config(
     page_title="Riri Auditora — Sefaz CE 2026",
-    page_icon="📖",
+    page_icon="🏠",
     layout="wide",
-    initial_sidebar_state="expanded",
+    initial_sidebar_state="auto",  # auto: expandida no desktop, colapsada no mobile
 )
 
 apply_theme()
@@ -60,6 +60,7 @@ user = exigir_login()
 # Sidebar
 # ============================================================================
 with st.sidebar:
+    st.caption("Use a seta no topo para recolher este menu →")
     st.markdown(
         f"""
         <div style="margin-bottom: 1rem;">

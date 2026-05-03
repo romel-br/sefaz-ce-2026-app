@@ -78,8 +78,22 @@ def login_form() -> UsuarioLogado | None:
     if "usuario_logado" in st.session_state:
         return st.session_state["usuario_logado"]
 
-    st.markdown("## 🔐 Login")
-    st.caption("App de preparação Sefaz CE 2026")
+    # Build info no topo (visível antes do login — útil para debug)
+    try:
+        from modules.version import get_build_info  # noqa: PLC0415
+        build = get_build_info()
+        deploy_str = (
+            build.deploy_time.strftime("%d/%m %H:%M UTC")
+            if build.deploy_time else "?"
+        )
+        st.caption(
+            f"Build `{build.short_sha}` · {build.ref_name} · deploy {deploy_str}"
+        )
+    except Exception:
+        pass
+
+    st.markdown("## Riri Auditora")
+    st.caption("Preparação para o concurso Sefaz CE 2026")
 
     with st.form("form_login"):
         username = st.text_input("Usuário")
