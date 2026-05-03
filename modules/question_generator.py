@@ -164,13 +164,20 @@ def gerar_questoes(
     )
 
     # Trata pause_turn (web_search server-side hit iteration limit) — re-envia para continuar
+    # IMPORTANTE: cache_control vai DENTRO do bloco system (top-level cache_control
+    # não é aceito por todas as versões do SDK; bloco é o caminho compatível).
     while response.stop_reason == "pause_turn":
         logger.info("pause_turn recebido, re-enviando para continuar agentic loop")
         response = client.messages.create(
             model=MODEL,
             max_tokens=MAX_TOKENS,
-            cache_control={"type": "ephemeral"},
-            system=[{"type": "text", "text": system_prompt}],
+            system=[
+                {
+                    "type": "text",
+                    "text": system_prompt,
+                    "cache_control": {"type": "ephemeral"},
+                }
+            ],
             thinking={"type": "adaptive"},
             output_config={
                 "effort": "high",

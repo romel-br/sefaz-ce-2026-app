@@ -13,8 +13,13 @@ Estrutura geral:
 """
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import datetime, timezone
 from enum import Enum as PyEnum
+
+
+def _utcnow() -> datetime:
+    """Wrapper para `datetime.now(timezone.utc)` — substitui `datetime.utcnow()` deprecated em 3.12+."""
+    return datetime.now(timezone.utc)
 
 from sqlalchemy import (
     Boolean,
@@ -76,7 +81,7 @@ class Usuario(Base):
     nome: Mapped[str] = mapped_column(String(100), nullable=False)
     senha_hash: Mapped[str] = mapped_column(String(200), nullable=False)
     perfil: Mapped[PerfilUsuario] = mapped_column(Enum(PerfilUsuario), nullable=False)
-    criado_em: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    criado_em: Mapped[datetime] = mapped_column(DateTime, default=_utcnow)
 
     simulados: Mapped[list["Simulado"]] = relationship(back_populates="usuario")
 
@@ -116,7 +121,7 @@ class Simulado(Base):
     disciplina_id: Mapped[int | None] = mapped_column(ForeignKey("disciplinas.id"), nullable=True)
     status: Mapped[StatusSimulado] = mapped_column(Enum(StatusSimulado), default=StatusSimulado.EM_ANDAMENTO)
 
-    iniciado_em: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    iniciado_em: Mapped[datetime] = mapped_column(DateTime, default=_utcnow)
     finalizado_em: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
     tempo_decorrido_segundos: Mapped[int] = mapped_column(Integer, default=0)
     tempo_limite_segundos: Mapped[int | None] = mapped_column(Integer, nullable=True)
@@ -188,7 +193,7 @@ class MaterialEstudo(Base):
     conteudo_md: Mapped[str] = mapped_column(Text, nullable=False)
     fontes_citadas: Mapped[str | None] = mapped_column(Text, nullable=True)  # JSON com lista de URLs
 
-    gerado_em: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    gerado_em: Mapped[datetime] = mapped_column(DateTime, default=_utcnow)
 
     simulado_origem: Mapped[Simulado] = relationship(back_populates="materiais")
     disciplina: Mapped[Disciplina] = relationship()
@@ -201,8 +206,8 @@ class ComentarioMaterial(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     material_id: Mapped[int] = mapped_column(ForeignKey("materiais_estudo.id"), nullable=False)
     texto: Mapped[str] = mapped_column(Text, nullable=False)
-    criado_em: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
-    atualizado_em: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    criado_em: Mapped[datetime] = mapped_column(DateTime, default=_utcnow)
+    atualizado_em: Mapped[datetime] = mapped_column(DateTime, default=_utcnow, onupdate=_utcnow)
 
     material: Mapped[MaterialEstudo] = relationship(back_populates="comentarios")
 
@@ -238,7 +243,7 @@ class BancoQuestao(Base):
     alerta_revisao: Mapped[bool] = mapped_column(Boolean, default=False)
 
     origem: Mapped[str] = mapped_column(String(20), default="manual")
-    criado_em: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    criado_em: Mapped[datetime] = mapped_column(DateTime, default=_utcnow)
 
     sub_topico: Mapped[SubTopico] = relationship()
 
@@ -257,6 +262,6 @@ class HistoricoNP(Base):
     acertos_gerais: Mapped[int] = mapped_column(Integer, default=0)
     acertos_especificos: Mapped[int] = mapped_column(Integer, default=0)
 
-    calculado_em: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    calculado_em: Mapped[datetime] = mapped_column(DateTime, default=_utcnow)
 
     simulado: Mapped[Simulado] = relationship(back_populates="historico_np")

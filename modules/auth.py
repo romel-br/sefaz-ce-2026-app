@@ -33,15 +33,22 @@ def _carregar_usuarios_dos_secrets() -> dict[str, dict]:
     return dict(users) if users else {}
 
 
+def _normalizar_username(username: str) -> str:
+    """Normaliza username: lowercase + sem espaços extras."""
+    return username.strip().lower()
+
+
 def _sincronizar_usuarios_para_db():
     """Garante que os usuários do secrets existam na tabela usuarios."""
     secrets_users = _carregar_usuarios_dos_secrets()
     if not secrets_users:
         return
 
-    session = get_session()
-    try:
-        for username, dados in secrets_users.items():
+    from db.database import db_session  # noqa: PLC0415
+    with db_session() as session:
+        for username_raw, dados in secrets_users.items():
+            # Normaliza ao inserir/atualizar (defesa contra typos no TOML)
+            username = _normalizar_username(username_raw)
             existente = session.query(Usuario).filter_by(username=username).first()
             if existente:
                 if existente.senha_hash != dados["senha_hash"]:
@@ -60,8 +67,6 @@ def _sincronizar_usuarios_para_db():
                     )
                 )
         session.commit()
-    finally:
-        session.close()
 
 
 def _verificar_senha(senha_plain: str, hash_armazenado: str) -> bool:
@@ -103,9 +108,11 @@ def login_form() -> UsuarioLogado | None:
     if not enviar:
         return None
 
-    session = get_session()
-    try:
-        usuario = session.query(Usuario).filter_by(username=username.strip().lower()).first()
+    from db.database import db_session  # noqa: PLC0415
+    with db_session() as session:
+        usuario = session.query(Usuario).filter_by(
+            username=_normalizar_username(username)
+        ).first()
         if not usuario or not _verificar_senha(senha, usuario.senha_hash):
             st.error("Usuário ou senha inválidos.")
             return None
@@ -118,8 +125,6 @@ def login_form() -> UsuarioLogado | None:
         )
         st.session_state["usuario_logado"] = ul
         st.rerun()
-    finally:
-        session.close()
 
     return None
 

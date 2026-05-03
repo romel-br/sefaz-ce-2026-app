@@ -5,7 +5,9 @@ Suporta SQLite local (dev) e PostgreSQL (produção via DATABASE_URL — Neon).
 from __future__ import annotations
 
 import os
+from contextlib import contextmanager
 from pathlib import Path
+from typing import Iterator
 
 import streamlit as st
 from sqlalchemy import create_engine
@@ -40,7 +42,7 @@ def get_engine():
     if _engine is None:
         url = _get_database_url()
         connect_args = {"check_same_thread": False} if url.startswith("sqlite:") else {}
-        # Pool moderado: Streamlit Cloud + Neon free tier — pause-on-idle
+        # pool_pre_ping para sobreviver ao auto-pause do Neon free tier
         _engine = create_engine(
             url,
             connect_args=connect_args,
@@ -59,7 +61,29 @@ def get_session_factory() -> sessionmaker:
 
 
 def get_session() -> Session:
+    """Retorna uma session sem context manager (caller controla close)."""
     return get_session_factory()()
+
+
+@contextmanager
+def db_session() -> Iterator[Session]:
+    """
+    Context manager para session — garante close, com rollback automático em erro.
+    Caller controla commit explicitamente (não há auto-commit).
+
+    Uso:
+        with db_session() as s:
+            s.query(Foo).all()
+            s.commit()  # explícito
+    """
+    session = get_session()
+    try:
+        yield session
+    except Exception:
+        session.rollback()
+        raise
+    finally:
+        session.close()
 
 
 def init_db() -> None:

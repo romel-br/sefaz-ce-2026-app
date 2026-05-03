@@ -18,8 +18,9 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from collections import defaultdict
 
 import streamlit as st
+from sqlalchemy import func
 
-from db.database import get_session
+from db.database import db_session
 from db.models import BancoQuestao, BlocoEdital, Disciplina, PerfilUsuario, SubTopico
 from modules.auth import exigir_login
 from modules.theme import COLOR_BORDER, COLOR_MUTED, COLOR_PRIMARY, apply_theme, subtitle
@@ -52,16 +53,18 @@ st.title("Banco de questões")
 subtitle("Pool de questões pré-geradas — usado antes da API em cada simulado")
 
 
-session = get_session()
-try:
+with db_session() as session:
     total = session.query(BancoQuestao).count()
     disciplinas = session.query(Disciplina).order_by(Disciplina.ordem).all()
     sub_topicos_total = session.query(SubTopico).count()
 
-    # Conta por sub-tópico
-    contagem_por_sub = defaultdict(int)
-    for bq in session.query(BancoQuestao).all():
-        contagem_por_sub[bq.sub_topico_id] += 1
+    # #4: Aggregação SQL — uma query em vez de N+1
+    counts = (
+        session.query(BancoQuestao.sub_topico_id, func.count(BancoQuestao.id))
+        .group_by(BancoQuestao.sub_topico_id)
+        .all()
+    )
+    contagem_por_sub: dict[int, int] = defaultdict(int, dict(counts))
 
     sub_topicos_cobertos = sum(1 for n in contagem_por_sub.values() if n > 0)
     pct_cobertura = (sub_topicos_cobertos / sub_topicos_total * 100) if sub_topicos_total else 0
@@ -112,6 +115,9 @@ try:
                 else:
                     icon = "●"
                     color = "#3d6b3d"
+                # #3: escape no nome do sub-tópico (vem do banco)
+                import html as _html  # local pra evitar import-as-shadow no top
+                nome_safe = _html.escape(st_.nome)
                 st.markdown(
                     f"""
                     <div style="display: flex; align-items: center;
@@ -119,7 +125,7 @@ try:
                                 border-bottom: 1px solid {COLOR_BORDER};">
                         <span style="color: {color}; font-size: 1.2rem;
                                      margin-right: 12px;">{icon}</span>
-                        <div style="flex: 1; font-size: 0.9rem;">{st_.nome}</div>
+                        <div style="flex: 1; font-size: 0.9rem;">{nome_safe}</div>
                         <div style="color: {COLOR_MUTED}; font-size: 0.85rem;">
                             {count} questão{'ões' if count != 1 else ''}
                         </div>
@@ -127,9 +133,6 @@ try:
                     """,
                     unsafe_allow_html=True,
                 )
-
-finally:
-    session.close()
 
 
 # ============================================================================

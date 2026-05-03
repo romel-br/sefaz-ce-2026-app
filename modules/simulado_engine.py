@@ -3,13 +3,17 @@ Motor de simulados — orquestra criação, execução e finalização.
 
 Responsabilidades:
 - Amostrar sub-tópicos para um simulado
-- Gerar questões em paralelo (ThreadPool)
+- Gerar questões em paralelo (ThreadPool) com fallback de banco
 - Persistir Simulado/Questao/Resposta no banco
-- Atualizar respostas (autosave)
+- Atualizar respostas (autosave) com validação de ownership
 - Calcular acertos e finalizar
 
 Não faz cálculo de NP nem gera material — isso é responsabilidade
 de outros módulos (np_calculator, futuramente material_generator).
+
+Segurança:
+- Toda função de leitura/escrita de simulado valida que o simulado
+  pertence ao usuario_id passado. Lança PermissionError caso contrário.
 """
 from __future__ import annotations
 
@@ -17,13 +21,12 @@ import logging
 import random
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
-from datetime import datetime
-
-from sqlalchemy.orm import Session
+from datetime import datetime, timezone
 
 from sqlalchemy import func
+from sqlalchemy.orm import Session
 
-from db.database import get_session
+from db.database import db_session
 from db.models import (
     BancoQuestao,
     BlocoEdital,
@@ -35,11 +38,14 @@ from db.models import (
     Simulado,
     StatusSimulado,
     SubTopico,
-    Usuario,
 )
 from modules.question_generator import gerar_questoes
 
 logger = logging.getLogger(__name__)
+
+
+def _utcnow() -> datetime:
+    return datetime.now(timezone.utc)
 
 
 # ============================================================================
@@ -60,6 +66,24 @@ class ProgressoGeracao:
 
 
 # ============================================================================
+# Validação de ownership (segurança)
+# ============================================================================
+def _validar_ownership(session: Session, simulado_id: int, usuario_id: int) -> Simulado:
+    """
+    Carrega o simulado e valida que pertence ao usuario_id.
+    Lança PermissionError se não pertencer, ValueError se não existir.
+    """
+    simulado = session.get(Simulado, simulado_id)
+    if not simulado:
+        raise ValueError(f"Simulado {simulado_id} não existe.")
+    if simulado.usuario_id != usuario_id:
+        raise PermissionError(
+            f"Simulado {simulado_id} não pertence ao usuário {usuario_id}."
+        )
+    return simulado
+
+
+# ============================================================================
 # Amostragem de sub-tópicos
 # ============================================================================
 def _amostrar_sub_topicos(
@@ -69,7 +93,6 @@ def _amostrar_sub_topicos(
 ) -> list[SubTopico]:
     """
     Sorteia N sub-tópicos da disciplina (com reposição se N > total).
-    Retorna a lista (pode conter repetições — a geração lida com isso).
     """
     sub_topicos = (
         session.query(SubTopico)
@@ -79,22 +102,20 @@ def _amostrar_sub_topicos(
     if not sub_topicos:
         raise ValueError(f"Disciplina {disciplina_id} não tem sub-tópicos.")
 
-    # Se há sub-tópicos suficientes, amostra sem reposição
     if len(sub_topicos) >= n_questoes:
         return random.sample(sub_topicos, n_questoes)
-
-    # Senão, amostragem com reposição
     return [random.choice(sub_topicos) for _ in range(n_questoes)]
 
 
 # ============================================================================
 # Geração paralela de questões
 # ============================================================================
-def _gerar_uma_questao(sub_topico: SubTopico, bloco_label: str, disciplina_nome: str) -> dict | None:
-    """
-    Gera 1 questão para um sub-tópico. Retorna dict da questão ou None se falhou.
-    Usado pelo ThreadPool — encapsula erros pra não derrubar o lote inteiro.
-    """
+def _gerar_uma_questao(
+    sub_topico: SubTopico,
+    bloco_label: str,
+    disciplina_nome: str,
+) -> dict | None:
+    """Gera 1 questão (encapsula erros pra não derrubar o lote)."""
     try:
         result = gerar_questoes(
             disciplina=disciplina_nome,
@@ -105,7 +126,6 @@ def _gerar_uma_questao(sub_topico: SubTopico, bloco_label: str, disciplina_nome:
         if not result.get("questoes"):
             return None
         questao_data = result["questoes"][0]
-        # Anexa o sub_topico_id para persistência
         questao_data["_sub_topico_id"] = sub_topico.id
         return questao_data
     except Exception as e:
@@ -120,11 +140,7 @@ def _gerar_questoes_em_paralelo(
     progresso_callback=None,
     max_workers: int = 5,
 ) -> list[dict]:
-    """
-    Gera 1 questão por sub-tópico em paralelo (ThreadPool).
-    Chama progresso_callback(ProgressoGeracao) a cada conclusão.
-    Retorna lista de questoes (dicts) — descarta as que falharam.
-    """
+    """Gera 1 questão por sub-tópico em paralelo. Descarta as que falharam."""
     total = len(sub_topicos)
     questoes_geradas: list[dict] = []
     falhas = 0
@@ -148,33 +164,31 @@ def _gerar_questoes_em_paralelo(
                         falhas=falhas,
                     )
                 )
-
     return questoes_geradas
 
 
 # ============================================================================
-# Criação de simulado
+# Banco de questões
 # ============================================================================
 def _puxar_do_banco(
     session: Session,
     disciplina_id: int,
     n_questoes: int,
 ) -> list[BancoQuestao]:
-    """
-    Sorteia até N questões do BancoQuestao filtrando por disciplina.
-    Retorna até N (pode retornar menos se banco não tiver suficientes).
-    """
-    questoes_disponiveis = (
+    """Sorteia até N questões do BancoQuestao para a disciplina."""
+    return (
         session.query(BancoQuestao)
         .join(SubTopico)
         .filter(SubTopico.disciplina_id == disciplina_id)
-        .order_by(func.random())  # PostgreSQL random() — em SQLite seria func.random() também
+        .order_by(func.random())
         .limit(n_questoes)
         .all()
     )
-    return questoes_disponiveis
 
 
+# ============================================================================
+# Criação de simulado
+# ============================================================================
 def iniciar_simulado_por_disciplina(
     usuario_id: int,
     disciplina_id: int,
@@ -183,28 +197,17 @@ def iniciar_simulado_por_disciplina(
     tempo_limite_segundos: int | None = None,
     progresso_callback=None,
     permitir_api_fallback: bool = True,
-) -> Simulado:
+) -> int:
     """
     Cria um simulado por disciplina:
     1. Busca questões no BancoQuestao primeiro (sem custo de API).
     2. Se faltarem, gera o restante via API (parallel ThreadPool).
     3. Persiste tudo como Questao vinculada ao Simulado.
 
-    Args:
-        usuario_id: ID do usuário (Ariane)
-        disciplina_id: ID da disciplina escolhida
-        n_questoes: 10/20/40 (presets) ou custom
-        com_timer: se True, ativa timer (tempo_limite_segundos obrigatório)
-        tempo_limite_segundos: se com_timer=True
-        progresso_callback: callback(ProgressoGeracao) durante geração via API
-        permitir_api_fallback: se False, falha se banco não tiver questões suficientes
-                              (útil pra modo "100% offline")
-
     Returns:
-        Simulado já criado e populado, status EM_ANDAMENTO.
+        ID do simulado criado.
     """
-    session = get_session()
-    try:
+    with db_session() as session:
         disciplina = session.get(Disciplina, disciplina_id)
         if not disciplina:
             raise ValueError(f"Disciplina {disciplina_id} não existe.")
@@ -215,19 +218,18 @@ def iniciar_simulado_por_disciplina(
             else "Conhecimentos Específicos"
         )
 
-        # Cria o simulado primeiro (status EM_ANDAMENTO)
         simulado = Simulado(
             usuario_id=usuario_id,
             modo=ModoSimulado.POR_DISCIPLINA,
             disciplina_id=disciplina_id,
             status=StatusSimulado.EM_ANDAMENTO,
-            iniciado_em=datetime.utcnow(),
+            iniciado_em=_utcnow(),
             tempo_limite_segundos=tempo_limite_segundos if com_timer else None,
             n_questoes=n_questoes,
             n_acertos=0,
         )
         session.add(simulado)
-        session.flush()  # pra ter o ID
+        session.flush()
 
         # PASSO 1: tenta puxar do banco
         do_banco = _puxar_do_banco(session, disciplina_id, n_questoes)
@@ -239,7 +241,6 @@ def iniciar_simulado_por_disciplina(
             simulado.id, n_do_banco, n_questoes, n_faltando,
         )
 
-        # Persiste as questões do banco (copia o conteúdo)
         ordem = 0
         for ordem, bq in enumerate(do_banco, start=1):
             session.add(Questao(
@@ -260,18 +261,19 @@ def iniciar_simulado_por_disciplina(
                 alerta_revisao=bq.alerta_revisao,
             ))
 
-        # PASSO 2: se faltam, completa via API (se permitido)
+        # PASSO 2: completa via API se necessário
         if n_faltando > 0:
             if not permitir_api_fallback:
                 raise RuntimeError(
-                    f"Banco tem só {n_do_banco}/{n_questoes} questões para essa disciplina "
-                    "e fallback de API está desabilitado. Adicione mais questões ao banco."
+                    f"Banco tem só {n_do_banco}/{n_questoes} questões. "
+                    "API fallback desabilitado."
                 )
 
             sub_topicos_para_api = _amostrar_sub_topicos(session, disciplina_id, n_faltando)
+            disc_nome = disciplina.nome  # captura antes do escopo da threadpool
             questoes_api = _gerar_questoes_em_paralelo(
                 sub_topicos=sub_topicos_para_api,
-                disciplina_nome=disciplina.nome,
+                disciplina_nome=disc_nome,
                 bloco_label=bloco_label,
                 progresso_callback=progresso_callback,
             )
@@ -297,56 +299,53 @@ def iniciar_simulado_por_disciplina(
                     alerta_revisao=q_data.get("alerta_revisao", False),
                 ))
 
-        # Se acabou sem nenhuma questão (banco vazio + falha geral na API), descarta
         if ordem == 0:
             session.delete(simulado)
             session.commit()
             raise RuntimeError(
-                "Nenhuma questão disponível. Banco vazio para essa disciplina e "
-                "geração via API falhou."
+                "Nenhuma questão disponível. Banco vazio e geração via API falhou."
             )
 
-        # Ajusta n_questoes ao real
         simulado.n_questoes = ordem
-
         session.commit()
-        session.refresh(simulado)
-        return simulado
-
-    except Exception:
-        session.rollback()
-        raise
-    finally:
-        session.close()
+        return simulado.id
 
 
 # ============================================================================
-# Operações durante o simulado
+# Operações durante o simulado (todas validam ownership)
 # ============================================================================
-def simulado_em_andamento(usuario_id: int) -> Simulado | None:
-    """Retorna o simulado mais recente em andamento, ou None."""
-    session = get_session()
-    try:
-        return (
+def simulado_em_andamento(usuario_id: int) -> int | None:
+    """Retorna o ID do simulado mais recente em andamento, ou None."""
+    with db_session() as session:
+        sim = (
             session.query(Simulado)
             .filter_by(usuario_id=usuario_id, status=StatusSimulado.EM_ANDAMENTO)
             .order_by(Simulado.iniciado_em.desc())
             .first()
         )
-    finally:
-        session.close()
+        return sim.id if sim else None
 
 
-def get_simulado_completo(simulado_id: int) -> dict:
+def info_simulado(simulado_id: int, usuario_id: int) -> dict:
+    """Retorna metadados básicos do simulado (id, datas, n_questoes)."""
+    with db_session() as session:
+        sim = _validar_ownership(session, simulado_id, usuario_id)
+        return {
+            "id": sim.id,
+            "iniciado_em": sim.iniciado_em,
+            "n_questoes": sim.n_questoes,
+            "tempo_limite_segundos": sim.tempo_limite_segundos,
+            "status": sim.status.value,
+        }
+
+
+def get_simulado_completo(simulado_id: int, usuario_id: int) -> dict:
     """
-    Carrega simulado + questões + respostas existentes para renderização.
-    Retorna dict serializável (não SQLAlchemy objects, evita lazy-load issues).
+    Carrega simulado + questões + respostas para renderização.
+    Valida ownership antes.
     """
-    session = get_session()
-    try:
-        simulado = session.get(Simulado, simulado_id)
-        if not simulado:
-            raise ValueError(f"Simulado {simulado_id} não existe.")
+    with db_session() as session:
+        simulado = _validar_ownership(session, simulado_id, usuario_id)
 
         questoes = (
             session.query(Questao)
@@ -399,25 +398,26 @@ def get_simulado_completo(simulado_id: int) -> dict:
                 for q in questoes
             ],
         }
-    finally:
-        session.close()
 
 
 def responder_questao(
     simulado_id: int,
+    usuario_id: int,
     questao_id: int,
     resposta_marcada: str | None,
     marcada_revisar: bool = False,
 ) -> None:
-    """
-    Autosave: UPSERT na tabela respostas.
-    resposta_marcada=None significa "em branco" (apenas marcada pra revisar).
-    """
-    session = get_session()
-    try:
+    """Autosave: UPSERT na tabela respostas, com validação de ownership."""
+    with db_session() as session:
+        # Validação dupla: simulado pertence ao usuário E questão pertence ao simulado
+        _validar_ownership(session, simulado_id, usuario_id)
         questao = session.get(Questao, questao_id)
         if not questao:
             raise ValueError(f"Questao {questao_id} não existe.")
+        if questao.simulado_id != simulado_id:
+            raise PermissionError(
+                f"Questao {questao_id} não pertence ao simulado {simulado_id}."
+            )
 
         existing = (
             session.query(Resposta)
@@ -433,7 +433,7 @@ def responder_questao(
             existing.resposta_marcada = resposta_marcada
             existing.acertou = acertou
             existing.marcada_revisar = marcada_revisar
-            existing.respondida_em = datetime.utcnow() if resposta_marcada else None
+            existing.respondida_em = _utcnow() if resposta_marcada else None
         else:
             session.add(Resposta(
                 simulado_id=simulado_id,
@@ -441,29 +441,39 @@ def responder_questao(
                 resposta_marcada=resposta_marcada,
                 acertou=acertou,
                 marcada_revisar=marcada_revisar,
-                respondida_em=datetime.utcnow() if resposta_marcada else None,
+                respondida_em=_utcnow() if resposta_marcada else None,
             ))
 
         session.commit()
-    except Exception:
-        session.rollback()
-        raise
-    finally:
-        session.close()
 
 
-def finalizar_simulado(simulado_id: int, tempo_decorrido_segundos: int) -> dict:
+def finalizar_simulado(
+    simulado_id: int,
+    usuario_id: int,
+    tempo_decorrido_segundos: int,
+) -> dict:
     """
-    Marca simulado como FINALIZADO, computa acertos e retorna sumário.
+    Marca simulado como FINALIZADO (idempotente: só finaliza se EM_ANDAMENTO).
+    Valida ownership antes.
 
     Returns:
-        dict com n_acertos, total, pct_acerto, por_disciplina (dict de stats).
+        dict com n_acertos, total, pct_acerto.
     """
-    session = get_session()
-    try:
-        simulado = session.get(Simulado, simulado_id)
-        if not simulado:
-            raise ValueError(f"Simulado {simulado_id} não existe.")
+    with db_session() as session:
+        simulado = _validar_ownership(session, simulado_id, usuario_id)
+
+        # Idempotência: se já finalizado, retorna o resultado existente
+        if simulado.status == StatusSimulado.FINALIZADO:
+            return {
+                "simulado_id": simulado_id,
+                "n_acertos": simulado.n_acertos,
+                "total": simulado.n_questoes,
+                "pct_acerto": (
+                    simulado.n_acertos / simulado.n_questoes * 100
+                    if simulado.n_questoes else 0
+                ),
+                "ja_finalizado": True,
+            }
 
         respostas = (
             session.query(Resposta)
@@ -473,7 +483,7 @@ def finalizar_simulado(simulado_id: int, tempo_decorrido_segundos: int) -> dict:
         n_acertos = sum(1 for r in respostas if r.acertou)
 
         simulado.status = StatusSimulado.FINALIZADO
-        simulado.finalizado_em = datetime.utcnow()
+        simulado.finalizado_em = _utcnow()
         simulado.tempo_decorrido_segundos = tempo_decorrido_segundos
         simulado.n_acertos = n_acertos
         session.commit()
@@ -483,26 +493,26 @@ def finalizar_simulado(simulado_id: int, tempo_decorrido_segundos: int) -> dict:
             "n_acertos": n_acertos,
             "total": simulado.n_questoes,
             "pct_acerto": (n_acertos / simulado.n_questoes * 100) if simulado.n_questoes else 0,
+            "ja_finalizado": False,
         }
-    except Exception:
-        session.rollback()
-        raise
-    finally:
-        session.close()
 
 
-def descartar_simulado(simulado_id: int) -> None:
-    """Marca simulado como DESCARTADO (não deleta — mantém histórico)."""
-    session = get_session()
-    try:
-        simulado = session.get(Simulado, simulado_id)
-        if not simulado:
-            return
+def descartar_simulado(simulado_id: int, usuario_id: int) -> None:
+    """Marca como DESCARTADO. Valida ownership."""
+    with db_session() as session:
+        simulado = _validar_ownership(session, simulado_id, usuario_id)
         simulado.status = StatusSimulado.DESCARTADO
-        simulado.finalizado_em = datetime.utcnow()
+        simulado.finalizado_em = _utcnow()
         session.commit()
-    except Exception:
-        session.rollback()
-        raise
-    finally:
-        session.close()
+
+
+def primeira_questao_nao_respondida(simulado_id: int, usuario_id: int) -> int:
+    """
+    Retorna o índice (0-based) da primeira questão sem resposta.
+    Útil pra retomar simulado no ponto correto. Se todas estão respondidas, retorna 0.
+    """
+    sim = get_simulado_completo(simulado_id, usuario_id)
+    for i, q in enumerate(sim["questoes"]):
+        if not q["resposta"]:
+            return i
+    return 0

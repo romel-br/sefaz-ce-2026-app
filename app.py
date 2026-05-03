@@ -171,78 +171,88 @@ st.info(
 st.markdown("### Estrutura do edital")
 st.caption("Área A01 — Gestão Fazendária. 160 questões objetivas no total.")
 
-from db.database import get_session
+import html as _html
+
+from sqlalchemy import func
+
+from db.database import db_session
 from db.models import BlocoEdital, Disciplina, SubTopico
 
-session = get_session()
-try:
-    col_g, col_e = st.columns(2)
+# #5: 1 query agregada em vez de N+1 (1 SELECT + 1 SELECT em vez de 14)
+with db_session() as session:
+    disciplinas = (
+        session.query(Disciplina)
+        .order_by(Disciplina.ordem)
+        .all()
+    )
+    sub_count_rows = (
+        session.query(SubTopico.disciplina_id, func.count(SubTopico.id))
+        .group_by(SubTopico.disciplina_id)
+        .all()
+    )
+    sub_count_por_disc = dict(sub_count_rows)
 
-    with col_g:
-        st.markdown(
-            """
-            <div style="font-family: 'Crimson Pro', serif; font-size: 1.2rem;
-                        color: #1e3a5f; margin-bottom: 4px;">
-                Conhecimentos Gerais
-            </div>
-            <div class="card-label">80 questões · peso 1×</div>
-            """,
-            unsafe_allow_html=True,
-        )
-        st.write("")
-        disciplinas_g = (
-            session.query(Disciplina)
-            .filter_by(bloco=BlocoEdital.GERAIS)
-            .order_by(Disciplina.ordem)
-            .all()
-        )
-        for d in disciplinas_g:
-            n_sub = session.query(SubTopico).filter_by(disciplina_id=d.id).count()
-            st.markdown(
-                f"""
-                <div style="padding: 8px 0; border-bottom: 1px solid #e8e3d6;">
-                    <div style="font-weight: 500;">{d.nome}</div>
-                    <div style="font-size: 0.8rem; color: #6b6b6b;">
-                        {d.n_questoes_prova} questões · {n_sub} sub-tópicos
-                    </div>
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
+    # Snapshot serializável (objetos SQLAlchemy não funcionam após session.close)
+    disc_snapshot = [
+        {
+            "id": d.id,
+            "nome": d.nome,
+            "bloco": d.bloco,
+            "n_questoes_prova": d.n_questoes_prova,
+            "n_sub_topicos": sub_count_por_disc.get(d.id, 0),
+        }
+        for d in disciplinas
+    ]
 
-    with col_e:
-        st.markdown(
-            """
-            <div style="font-family: 'Crimson Pro', serif; font-size: 1.2rem;
-                        color: #1e3a5f; margin-bottom: 4px;">
-                Conhecimentos Específicos
+
+def _render_disciplina(d: dict):
+    nome_safe = _html.escape(d["nome"])
+    st.markdown(
+        f"""
+        <div style="padding: 8px 0; border-bottom: 1px solid #e8e3d6;">
+            <div style="font-weight: 500;">{nome_safe}</div>
+            <div style="font-size: 0.8rem; color: #6b6b6b;">
+                {d['n_questoes_prova']} questões · {d['n_sub_topicos']} sub-tópicos
             </div>
-            <div class="card-label">80 questões · peso 2×</div>
-            """,
-            unsafe_allow_html=True,
-        )
-        st.write("")
-        disciplinas_e = (
-            session.query(Disciplina)
-            .filter_by(bloco=BlocoEdital.ESPECIFICOS)
-            .order_by(Disciplina.ordem)
-            .all()
-        )
-        for d in disciplinas_e:
-            n_sub = session.query(SubTopico).filter_by(disciplina_id=d.id).count()
-            st.markdown(
-                f"""
-                <div style="padding: 8px 0; border-bottom: 1px solid #e8e3d6;">
-                    <div style="font-weight: 500;">{d.nome}</div>
-                    <div style="font-size: 0.8rem; color: #6b6b6b;">
-                        {d.n_questoes_prova} questões · {n_sub} sub-tópicos
-                    </div>
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
-finally:
-    session.close()
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+col_g, col_e = st.columns(2)
+
+with col_g:
+    st.markdown(
+        """
+        <div style="font-family: 'Crimson Pro', serif; font-size: 1.2rem;
+                    color: #1e3a5f; margin-bottom: 4px;">
+            Conhecimentos Gerais
+        </div>
+        <div class="card-label">80 questões · peso 1×</div>
+        """,
+        unsafe_allow_html=True,
+    )
+    st.write("")
+    for d in disc_snapshot:
+        if d["bloco"] == BlocoEdital.GERAIS:
+            _render_disciplina(d)
+
+with col_e:
+    st.markdown(
+        """
+        <div style="font-family: 'Crimson Pro', serif; font-size: 1.2rem;
+                    color: #1e3a5f; margin-bottom: 4px;">
+            Conhecimentos Específicos
+        </div>
+        <div class="card-label">80 questões · peso 2×</div>
+        """,
+        unsafe_allow_html=True,
+    )
+    st.write("")
+    for d in disc_snapshot:
+        if d["bloco"] == BlocoEdital.ESPECIFICOS:
+            _render_disciplina(d)
 
 
 # ============================================================================
