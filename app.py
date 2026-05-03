@@ -11,6 +11,7 @@ Para rodar localmente:
 from __future__ import annotations
 
 import sys
+from datetime import date
 from pathlib import Path
 
 # Garante que os módulos locais sejam importáveis
@@ -21,22 +22,24 @@ import streamlit as st
 from db.database import init_db
 from db.models import PerfilUsuario
 from modules.auth import exigir_login, logout
+from modules.theme import COLOR_ACCENT, COLOR_PRIMARY, apply_theme, subtitle
 from modules.version import get_build_info
 
 
 st.set_page_config(
-    page_title="Sefaz CE 2026 — Preparação",
-    page_icon="📚",
+    page_title="Riri Auditora — Sefaz CE 2026",
+    page_icon="📖",
     layout="wide",
     initial_sidebar_state="expanded",
 )
+
+apply_theme()
 
 
 @st.cache_resource
 def _bootstrap():
     """Inicializa banco e seed na primeira execução do processo."""
     init_db()
-    # Seed roda só se não houver disciplinas
     from db.database import get_session
     from db.models import Disciplina
 
@@ -54,83 +57,212 @@ user = exigir_login()
 
 
 # ============================================================================
-# Sidebar — navegação e usuário logado
+# Sidebar
 # ============================================================================
 with st.sidebar:
-    st.markdown(f"### 👤 {user.nome}")
-    st.caption(f"Perfil: **{user.perfil.value}**")
+    st.markdown(
+        f"""
+        <div style="margin-bottom: 1rem;">
+            <div style="font-family: 'Crimson Pro', serif; font-size: 1.3rem;
+                        color: {COLOR_PRIMARY}; font-weight: 600; line-height: 1;">
+                {user.nome}
+            </div>
+            <div style="font-size: 0.75rem; color: #6b6b6b; text-transform: uppercase;
+                        letter-spacing: 0.06em; margin-top: 4px;">
+                {user.perfil.value}
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
     if st.button("Sair", use_container_width=True):
         logout()
+
     st.divider()
 
-    # Build info — admin only (info técnica de versionamento)
+    # Build info — admin only
     if user.perfil == PerfilUsuario.ADMIN:
         build = get_build_info()
-        st.caption(
-            f"🛠️ **Build:** `{build.short_sha}` ({build.ref_name})  \n"
-            f"📅 **Deploy:** {build.deploy_time.strftime('%d/%m %H:%M UTC') if build.deploy_time else '?'}"
+        deploy_str = (
+            build.deploy_time.strftime("%d/%m %H:%M UTC")
+            if build.deploy_time else "?"
         )
+        st.caption(f"Build `{build.short_sha}` · {build.ref_name} · {deploy_str}")
 
 
 # ============================================================================
-# Conteúdo principal — placeholder até as páginas serem construídas
+# Conteúdo principal
 # ============================================================================
-st.title("📚 Sefaz CE 2026")
-st.subheader("Preparação para a prova de 1–2 de agosto de 2026")
+st.title("Riri Auditora")
+subtitle("Preparação para o concurso Sefaz CE 2026 — Auditor-Fiscal, Área A01")
 
+
+# Contagem regressiva pra prova
+PROVA_DIA = date(2026, 8, 1)
+hoje = date.today()
+dias_restantes = (PROVA_DIA - hoje).days
+
+col1, col2, col3 = st.columns([2, 1, 1])
+with col1:
+    st.markdown(
+        f"""
+        <div class="card">
+            <div class="card-label">Dias até a prova</div>
+            <div style="font-family: 'Crimson Pro', serif; font-size: 3rem;
+                        font-weight: 600; color: {COLOR_PRIMARY}; line-height: 1;">
+                {dias_restantes}
+            </div>
+            <div style="color: #6b6b6b; margin-top: 8px;">
+                Prova objetiva: 1 e 2 de agosto de 2026
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+with col2:
+    st.markdown(
+        f"""
+        <div class="card">
+            <div class="card-label">Banca</div>
+            <div style="font-family: 'Crimson Pro', serif; font-size: 1.5rem;
+                        font-weight: 600; color: {COLOR_PRIMARY};">
+                FCC
+            </div>
+            <div style="color: #6b6b6b; font-size: 0.85rem; margin-top: 4px;">
+                Fundação Carlos Chagas
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+with col3:
+    st.markdown(
+        f"""
+        <div class="card">
+            <div class="card-label">Corte de habilitação</div>
+            <div style="font-family: 'Crimson Pro', serif; font-size: 1.5rem;
+                        font-weight: 600; color: {COLOR_ACCENT};">
+                ≥ 150 pts
+            </div>
+            <div style="color: #6b6b6b; font-size: 0.85rem; margin-top: 4px;">
+                Acima da mediana
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+st.write("")  # spacing
+
+# Aviso de construção — mais discreto
 st.info(
-    "🚧 **Aplicação em construção.** O esqueleto do app está pronto. "
-    "As próximas etapas vão adicionar: Simulados, Material de Estudo e Dashboard."
+    "Aplicação em construção iterativa. Use o menu lateral para acessar "
+    "as funcionalidades já disponíveis. Novas serão adicionadas a cada release."
 )
 
-with st.expander("✅ O que já está pronto"):
-    st.markdown(
-        """
-        - Estrutura do projeto e dependências
-        - Schema do banco de dados (SQLAlchemy)
-        - Seed do edital — 13 disciplinas e ~290 sub-tópicos
-        - Configurações: whitelist de fontes, parâmetros NP, prompts
-        - Autenticação por login e senha
-        - Sincronização automática de usuários do `secrets.toml`
-        """
-    )
+# ============================================================================
+# Conteúdo do edital — apresentação mais elegante
+# ============================================================================
+st.markdown("### Estrutura do edital")
+st.caption("Área A01 — Gestão Fazendária. 160 questões objetivas no total.")
 
-with st.expander("📋 Próximas etapas"):
-    st.markdown(
-        """
-        1. Motor de geração de questões (Claude API + RAG)
-        2. Motor de cálculo da Nota Padronizada
-        3. Tela de simulado (3 modos: por disciplina, áreas fracas, completo)
-        4. Tela de resultado pós-simulado
-        5. Motor de geração de material de estudo
-        6. Dashboard gerencial
-        7. Aba de feedbacks consolidados (admin)
-        """
-    )
+from db.database import get_session
+from db.models import BlocoEdital, Disciplina, SubTopico
 
-# Mostra estrutura do edital — sanity check de que o seed funcionou
-with st.expander("📖 Conteúdo do edital (Área A01) — disciplinas e pesos"):
-    from db.database import get_session
-    from db.models import BlocoEdital, Disciplina, SubTopico
+session = get_session()
+try:
+    col_g, col_e = st.columns(2)
 
-    session = get_session()
-    try:
-        for bloco in [BlocoEdital.GERAIS, BlocoEdital.ESPECIFICOS]:
-            label = "Conhecimentos Gerais (peso 1)" if bloco == BlocoEdital.GERAIS else "Conhecimentos Específicos (peso 2)"
-            st.markdown(f"#### {label}")
-            disciplinas = (
-                session.query(Disciplina)
-                .filter_by(bloco=bloco)
-                .order_by(Disciplina.ordem)
-                .all()
+    with col_g:
+        st.markdown(
+            """
+            <div style="font-family: 'Crimson Pro', serif; font-size: 1.2rem;
+                        color: #1e3a5f; margin-bottom: 4px;">
+                Conhecimentos Gerais
+            </div>
+            <div class="card-label">80 questões · peso 1×</div>
+            """,
+            unsafe_allow_html=True,
+        )
+        st.write("")
+        disciplinas_g = (
+            session.query(Disciplina)
+            .filter_by(bloco=BlocoEdital.GERAIS)
+            .order_by(Disciplina.ordem)
+            .all()
+        )
+        for d in disciplinas_g:
+            n_sub = session.query(SubTopico).filter_by(disciplina_id=d.id).count()
+            st.markdown(
+                f"""
+                <div style="padding: 8px 0; border-bottom: 1px solid #e8e3d6;">
+                    <div style="font-weight: 500;">{d.nome}</div>
+                    <div style="font-size: 0.8rem; color: #6b6b6b;">
+                        {d.n_questoes_prova} questões · {n_sub} sub-tópicos
+                    </div>
+                </div>
+                """,
+                unsafe_allow_html=True,
             )
-            for d in disciplinas:
-                n_sub = session.query(SubTopico).filter_by(disciplina_id=d.id).count()
-                st.markdown(f"- **{d.nome}** — {d.n_questoes_prova} questões na prova, {n_sub} sub-tópicos")
-    finally:
-        session.close()
+
+    with col_e:
+        st.markdown(
+            """
+            <div style="font-family: 'Crimson Pro', serif; font-size: 1.2rem;
+                        color: #1e3a5f; margin-bottom: 4px;">
+                Conhecimentos Específicos
+            </div>
+            <div class="card-label">80 questões · peso 2×</div>
+            """,
+            unsafe_allow_html=True,
+        )
+        st.write("")
+        disciplinas_e = (
+            session.query(Disciplina)
+            .filter_by(bloco=BlocoEdital.ESPECIFICOS)
+            .order_by(Disciplina.ordem)
+            .all()
+        )
+        for d in disciplinas_e:
+            n_sub = session.query(SubTopico).filter_by(disciplina_id=d.id).count()
+            st.markdown(
+                f"""
+                <div style="padding: 8px 0; border-bottom: 1px solid #e8e3d6;">
+                    <div style="font-weight: 500;">{d.nome}</div>
+                    <div style="font-size: 0.8rem; color: #6b6b6b;">
+                        {d.n_questoes_prova} questões · {n_sub} sub-tópicos
+                    </div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
+finally:
+    session.close()
 
 
+# ============================================================================
+# Roadmap (admin only) — info técnica do que vem por aí
+# ============================================================================
 if user.perfil == PerfilUsuario.ADMIN:
-    st.divider()
-    st.caption("🛠️ Modo admin ativo (Romel). Aba de feedbacks da Ariane aparecerá aqui quando estiver pronta.")
+    st.write("")
+    st.write("")
+    with st.expander("Roadmap técnico"):
+        st.markdown(
+            """
+            **Concluídos:**
+            - Schema do banco + seed do edital (13 disciplinas, ~290 sub-tópicos)
+            - Auth com bcrypt + secrets
+            - Motor de geração de questões estilo FCC (Claude API + web_search)
+            - Motor de cálculo da Nota Padronizada (4 faixas de chance)
+
+            **Em construção:**
+            - Telas de simulado (por disciplina · áreas fracas · completo)
+            - Material de estudo gerado pós-simulado
+            - Dashboard de proficiência por disciplina
+            - Aba de feedbacks consolidados
+            """
+        )

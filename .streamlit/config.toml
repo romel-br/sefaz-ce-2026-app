@@ -1,0 +1,19 @@
+# Tema base — paleta editorial profissional para preparação de concurso fiscal
+# Direção: navy + creme + terracota (vs. purple/gradients genéricos de SaaS)
+
+[theme]
+# Paleta
+primaryColor = "#1e3a5f"           # Navy profundo — autoridade, formalidade
+backgroundColor = "#fafaf7"        # Creme suave — leitura prolongada sem cansar
+secondaryBackgroundColor = "#f0ede4"  # Sand — para sidebars e cards
+textColor = "#1a1a1a"              # Quase preto — alto contraste
+
+# Fontes — Streamlit aceita "sans serif", "serif", "monospace"
+# Vamos sobrescrever com Google Fonts via CSS injetado em modules/theme.py
+font = "serif"
+
+[server]
+headless = true
+
+[browser]
+gatherUsageStats = false

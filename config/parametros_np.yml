@@ -27,28 +27,28 @@ peso_especificos: 2
 # Corte oficial = 150 (candidato mediano = NP 50 em ambos os blocos × pesos = 50+100=150)
 faixas:
   - nome: "Pouca chance"
-    cor: "#dc2626"
+    cor: "#a8392b"          # Vermelho terra — alerta sério mas não estridente
     emoji: "🔴"
     score_min: 0
     score_max: 139
     mensagem: "Ainda há um caminho longo. Foque nos sub-tópicos críticos primeiro."
 
   - nome: "Chance média"
-    cor: "#ea580c"
+    cor: "#c2563f"          # Terracota — atenção urgente
     emoji: "🟠"
     score_min: 140
     score_max: 154
     mensagem: "Você está perto do corte. Cada ponto agora vale muito."
 
   - nome: "Alta chance"
-    cor: "#eab308"
+    cor: "#a17e2a"          # Mostarda escura — confiança cautelosa
     emoji: "🟡"
     score_min: 155
     score_max: 174
     mensagem: "Confortavelmente acima do corte. Foque em consolidar as áreas dominadas e levantar as fracas."
 
   - nome: "Vai passar!"
-    cor: "#16a34a"
+    cor: "#3d6b3d"          # Verde mato — sucesso sereno, não festa
     emoji: "🟢"
     score_min: 175
     score_max: 999
@@ -57,19 +57,19 @@ faixas:
 # Níveis de proficiência por sub-tópico
 niveis_proficiencia:
   - nome: "Crítico"
-    cor: "#dc2626"
+    cor: "#a8392b"          # Vermelho terra
     pct_min: 0
     pct_max: 49
   - nome: "Em desenvolvimento"
-    cor: "#ea580c"
+    cor: "#c2563f"          # Terracota
     pct_min: 50
     pct_max: 69
   - nome: "Satisfatório"
-    cor: "#eab308"
+    cor: "#a17e2a"          # Mostarda escura
     pct_min: 70
     pct_max: 84
   - nome: "Dominado"
-    cor: "#16a34a"
+    cor: "#3d6b3d"          # Verde mato
     pct_min: 85
     pct_max: 100
 
