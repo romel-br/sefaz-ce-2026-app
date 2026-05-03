@@ -144,11 +144,11 @@ def gerar_questoes(
         model=MODEL,
         max_tokens=MAX_TOKENS,
         # System prompt cacheado: economiza ~70% em batches
-        cache_control={"type": "ephemeral"},
         system=[
             {
                 "type": "text",
                 "text": system_prompt,
+                "cache_control": {"type": "ephemeral"},
             }
         ],
         thinking={"type": "adaptive"},

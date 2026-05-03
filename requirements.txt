@@ -1,7 +1,7 @@
 streamlit==1.40.2
 streamlit-authenticator==0.4.1
 sqlalchemy==2.0.36
-anthropic==0.42.0
+anthropic>=0.69.0
 plotly==5.24.1
 pandas==2.2.3
 pyyaml==6.0.2
