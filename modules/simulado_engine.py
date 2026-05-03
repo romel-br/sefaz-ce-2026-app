@@ -21,8 +21,11 @@ from datetime import datetime
 
 from sqlalchemy.orm import Session
 
+from sqlalchemy import func
+
 from db.database import get_session
 from db.models import (
+    BancoQuestao,
     BlocoEdital,
     Disciplina,
     FonteOrigem,
@@ -152,6 +155,26 @@ def _gerar_questoes_em_paralelo(
 # ============================================================================
 # Criação de simulado
 # ============================================================================
+def _puxar_do_banco(
+    session: Session,
+    disciplina_id: int,
+    n_questoes: int,
+) -> list[BancoQuestao]:
+    """
+    Sorteia até N questões do BancoQuestao filtrando por disciplina.
+    Retorna até N (pode retornar menos se banco não tiver suficientes).
+    """
+    questoes_disponiveis = (
+        session.query(BancoQuestao)
+        .join(SubTopico)
+        .filter(SubTopico.disciplina_id == disciplina_id)
+        .order_by(func.random())  # PostgreSQL random() — em SQLite seria func.random() também
+        .limit(n_questoes)
+        .all()
+    )
+    return questoes_disponiveis
+
+
 def iniciar_simulado_por_disciplina(
     usuario_id: int,
     disciplina_id: int,
@@ -159,9 +182,13 @@ def iniciar_simulado_por_disciplina(
     com_timer: bool,
     tempo_limite_segundos: int | None = None,
     progresso_callback=None,
+    permitir_api_fallback: bool = True,
 ) -> Simulado:
     """
-    Cria um simulado por disciplina, gera as questões em paralelo e persiste tudo.
+    Cria um simulado por disciplina:
+    1. Busca questões no BancoQuestao primeiro (sem custo de API).
+    2. Se faltarem, gera o restante via API (parallel ThreadPool).
+    3. Persiste tudo como Questao vinculada ao Simulado.
 
     Args:
         usuario_id: ID do usuário (Ariane)
@@ -169,7 +196,9 @@ def iniciar_simulado_por_disciplina(
         n_questoes: 10/20/40 (presets) ou custom
         com_timer: se True, ativa timer (tempo_limite_segundos obrigatório)
         tempo_limite_segundos: se com_timer=True
-        progresso_callback: callback(ProgressoGeracao) chamado a cada questão pronta
+        progresso_callback: callback(ProgressoGeracao) durante geração via API
+        permitir_api_fallback: se False, falha se banco não tiver questões suficientes
+                              (útil pra modo "100% offline")
 
     Returns:
         Simulado já criado e populado, status EM_ANDAMENTO.
@@ -200,47 +229,85 @@ def iniciar_simulado_por_disciplina(
         session.add(simulado)
         session.flush()  # pra ter o ID
 
-        # Amostra sub-tópicos
-        sub_topicos = _amostrar_sub_topicos(session, disciplina_id, n_questoes)
+        # PASSO 1: tenta puxar do banco
+        do_banco = _puxar_do_banco(session, disciplina_id, n_questoes)
+        n_do_banco = len(do_banco)
+        n_faltando = n_questoes - n_do_banco
 
-        # Gera em paralelo
-        questoes_data = _gerar_questoes_em_paralelo(
-            sub_topicos=sub_topicos,
-            disciplina_nome=disciplina.nome,
-            bloco_label=bloco_label,
-            progresso_callback=progresso_callback,
+        logger.info(
+            "Simulado %d: %d/%d do banco, faltam %d para gerar via API",
+            simulado.id, n_do_banco, n_questoes, n_faltando,
         )
 
-        # Se tudo falhou, descarta o simulado
-        if not questoes_data:
+        # Persiste as questões do banco (copia o conteúdo)
+        ordem = 0
+        for ordem, bq in enumerate(do_banco, start=1):
+            session.add(Questao(
+                simulado_id=simulado.id,
+                sub_topico_id=bq.sub_topico_id,
+                ordem=ordem,
+                enunciado=bq.enunciado,
+                alternativa_a=bq.alternativa_a,
+                alternativa_b=bq.alternativa_b,
+                alternativa_c=bq.alternativa_c,
+                alternativa_d=bq.alternativa_d,
+                alternativa_e=bq.alternativa_e,
+                gabarito=bq.gabarito,
+                justificativa=bq.justificativa,
+                fonte_descricao=bq.fonte_descricao,
+                fonte_url=bq.fonte_url,
+                fonte_origem=bq.fonte_origem,
+                alerta_revisao=bq.alerta_revisao,
+            ))
+
+        # PASSO 2: se faltam, completa via API (se permitido)
+        if n_faltando > 0:
+            if not permitir_api_fallback:
+                raise RuntimeError(
+                    f"Banco tem só {n_do_banco}/{n_questoes} questões para essa disciplina "
+                    "e fallback de API está desabilitado. Adicione mais questões ao banco."
+                )
+
+            sub_topicos_para_api = _amostrar_sub_topicos(session, disciplina_id, n_faltando)
+            questoes_api = _gerar_questoes_em_paralelo(
+                sub_topicos=sub_topicos_para_api,
+                disciplina_nome=disciplina.nome,
+                bloco_label=bloco_label,
+                progresso_callback=progresso_callback,
+            )
+
+            for q_data in questoes_api:
+                ordem += 1
+                fonte_origem = FonteOrigem.WEB if q_data.get("fonte_url") else None
+                session.add(Questao(
+                    simulado_id=simulado.id,
+                    sub_topico_id=q_data["_sub_topico_id"],
+                    ordem=ordem,
+                    enunciado=q_data["enunciado"],
+                    alternativa_a=q_data["alternativas"]["A"],
+                    alternativa_b=q_data["alternativas"]["B"],
+                    alternativa_c=q_data["alternativas"]["C"],
+                    alternativa_d=q_data["alternativas"]["D"],
+                    alternativa_e=q_data["alternativas"]["E"],
+                    gabarito=q_data["gabarito"],
+                    justificativa=q_data["justificativa"],
+                    fonte_descricao=q_data.get("fonte_descricao"),
+                    fonte_url=q_data.get("fonte_url"),
+                    fonte_origem=fonte_origem,
+                    alerta_revisao=q_data.get("alerta_revisao", False),
+                ))
+
+        # Se acabou sem nenhuma questão (banco vazio + falha geral na API), descarta
+        if ordem == 0:
             session.delete(simulado)
             session.commit()
-            raise RuntimeError("Nenhuma questão pôde ser gerada. Tente novamente.")
-
-        # Ajusta n_questoes ao real (caso algumas tenham falhado)
-        simulado.n_questoes = len(questoes_data)
-
-        # Persiste cada questão
-        for ordem, q_data in enumerate(questoes_data, start=1):
-            fonte_origem = FonteOrigem.WEB if q_data.get("fonte_url") else None
-            questao = Questao(
-                simulado_id=simulado.id,
-                sub_topico_id=q_data["_sub_topico_id"],
-                ordem=ordem,
-                enunciado=q_data["enunciado"],
-                alternativa_a=q_data["alternativas"]["A"],
-                alternativa_b=q_data["alternativas"]["B"],
-                alternativa_c=q_data["alternativas"]["C"],
-                alternativa_d=q_data["alternativas"]["D"],
-                alternativa_e=q_data["alternativas"]["E"],
-                gabarito=q_data["gabarito"],
-                justificativa=q_data["justificativa"],
-                fonte_descricao=q_data.get("fonte_descricao"),
-                fonte_url=q_data.get("fonte_url"),
-                fonte_origem=fonte_origem,
-                alerta_revisao=q_data.get("alerta_revisao", False),
+            raise RuntimeError(
+                "Nenhuma questão disponível. Banco vazio para essa disciplina e "
+                "geração via API falhou."
             )
-            session.add(questao)
+
+        # Ajusta n_questoes ao real
+        simulado.n_questoes = ordem
 
         session.commit()
         session.refresh(simulado)

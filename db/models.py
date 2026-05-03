@@ -207,6 +207,42 @@ class ComentarioMaterial(Base):
     material: Mapped[MaterialEstudo] = relationship(back_populates="comentarios")
 
 
+class BancoQuestao(Base):
+    """
+    Pool de questões pré-geradas, NÃO vinculadas a um simulado específico.
+
+    Origem possível:
+    - "manual": gerada via Claude.ai (conversa do Romel) e seedada via JSON
+    - "api": gerada via API (legacy, caso queira popular o banco com a API)
+
+    Quando um simulado é criado, sorteia daqui primeiro. Se não houver questões
+    suficientes para a disciplina, completa via API generation.
+    """
+    __tablename__ = "banco_questoes"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    sub_topico_id: Mapped[int] = mapped_column(ForeignKey("sub_topicos.id"), nullable=False)
+
+    enunciado: Mapped[str] = mapped_column(Text, nullable=False)
+    alternativa_a: Mapped[str] = mapped_column(Text, nullable=False)
+    alternativa_b: Mapped[str] = mapped_column(Text, nullable=False)
+    alternativa_c: Mapped[str] = mapped_column(Text, nullable=False)
+    alternativa_d: Mapped[str] = mapped_column(Text, nullable=False)
+    alternativa_e: Mapped[str] = mapped_column(Text, nullable=False)
+    gabarito: Mapped[str] = mapped_column(String(1), nullable=False)
+    justificativa: Mapped[str] = mapped_column(Text, nullable=False)
+
+    fonte_descricao: Mapped[str | None] = mapped_column(String(500), nullable=True)
+    fonte_url: Mapped[str | None] = mapped_column(String(500), nullable=True)
+    fonte_origem: Mapped[FonteOrigem | None] = mapped_column(Enum(FonteOrigem), nullable=True)
+    alerta_revisao: Mapped[bool] = mapped_column(Boolean, default=False)
+
+    origem: Mapped[str] = mapped_column(String(20), default="manual")
+    criado_em: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+    sub_topico: Mapped[SubTopico] = relationship()
+
+
 class HistoricoNP(Base):
     __tablename__ = "historico_np"
 

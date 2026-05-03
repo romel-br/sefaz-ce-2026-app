@@ -402,9 +402,24 @@ elif st.session_state.sim_state == "execucao":
         )
 
     with col_c:
-        if st.button("Próxima →", disabled=(idx == total - 1), use_container_width=True):
-            st.session_state.sim_questao_idx = idx + 1
-            st.rerun()
+        if idx == total - 1:
+            # Última questão: vira botão de finalizar (não desabilita)
+            if st.button(
+                "Finalizar simulado",
+                type="primary",
+                use_container_width=True,
+                key="btn_finalizar_inline",
+            ):
+                tempo_decorrido = int(
+                    datetime.utcnow().timestamp() - st.session_state.sim_inicio_ts
+                )
+                finalizar_simulado(st.session_state.sim_id, tempo_decorrido)
+                st.session_state.sim_state = "resultado"
+                st.rerun()
+        else:
+            if st.button("Próxima →", use_container_width=True):
+                st.session_state.sim_questao_idx = idx + 1
+                st.rerun()
 
 
 # ============================================================================

@@ -1,0 +1,187 @@
+{
+  "version": "1.0",
+  "geradas_em": "2026-05-03",
+  "geradas_via": "Claude.ai (manual, sem custo de API)",
+  "questoes": [
+    {
+      "disciplina": "Direito Tributário",
+      "sub_topico": "Limitações constitucionais do poder de tributar",
+      "enunciado": "À luz das limitações constitucionais ao poder de tributar previstas na Constituição Federal de 1988, considere as seguintes assertivas sobre o princípio da legalidade tributária e sua aplicação. Está CORRETO afirmar que:",
+      "alternativas": {
+        "A": "O princípio da legalidade tributária é absoluto, de modo que nenhum tributo poderá ter suas alíquotas alteradas senão por meio de lei em sentido estrito aprovada pelo Poder Legislativo competente.",
+        "B": "É facultado ao Poder Executivo, atendidas as condições e os limites estabelecidos em lei, alterar as alíquotas dos impostos sobre importação, exportação, produtos industrializados e operações financeiras, em razão da função extrafiscal desses tributos.",
+        "C": "A exigência de lei complementar para a instituição de tributos abrange todas as espécies tributárias, incluindo impostos, taxas, contribuições de melhoria e empréstimos compulsórios.",
+        "D": "A legalidade tributária dispensa lei para a fixação da alíquota, sendo suficiente a previsão da hipótese de incidência e do sujeito passivo em ato normativo do Poder Executivo.",
+        "E": "Medidas provisórias não podem instituir ou majorar tributos, em qualquer hipótese, por afronta direta ao princípio da estrita legalidade tributária."
+      },
+      "gabarito": "B",
+      "justificativa": "A alternativa B reproduz o disposto no art. 153, §1º, da CF/88, que excepciona o princípio da legalidade quanto às alíquotas dos impostos extrafiscais (II, IE, IPI e IOF). A alternativa A está incorreta porque o princípio comporta as exceções constitucionalmente previstas. A alternativa C está incorreta: lei complementar é exigida apenas para empréstimos compulsórios, impostos residuais e contribuições residuais; impostos ordinários, taxas e contribuições de melhoria são instituídos por lei ordinária. A alternativa D está incorreta porque a alíquota é elemento essencial do tributo e exige previsão em lei (CTN, art. 97, IV). A alternativa E está incorreta: medidas provisórias podem instituir e majorar impostos, conforme art. 62, §2º, da CF/88, observada a anterioridade.",
+      "fonte_descricao": "CF/88, art. 150, I; art. 153, §1º; art. 62, §2º; CTN, art. 97",
+      "fonte_url": "https://www.planalto.gov.br/ccivil_03/constituicao/constituicao.htm",
+      "alerta_revisao": false,
+      "origem": "manual"
+    },
+    {
+      "disciplina": "Direito Tributário",
+      "sub_topico": "Limitações constitucionais do poder de tributar",
+      "enunciado": "Sobre os princípios da anterioridade anual e da anterioridade nonagesimal (noventena), à luz da Constituição Federal de 1988 e da jurisprudência consolidada do Supremo Tribunal Federal, é CORRETO afirmar:",
+      "alternativas": {
+        "A": "O Imposto sobre a Renda e Proventos de Qualquer Natureza submete-se integralmente ao princípio da anterioridade nonagesimal, de modo que eventual majoração de alíquota só produzirá efeitos após noventa dias da publicação da lei que a aumentar.",
+        "B": "As contribuições sociais para a seguridade social submetem-se ao princípio da anterioridade anual, mas estão expressamente excepcionadas da anterioridade nonagesimal pela Constituição Federal.",
+        "C": "O Imposto sobre Produtos Industrializados está sujeito apenas à anterioridade nonagesimal, sendo excepcionado da anterioridade anual em razão de sua função extrafiscal.",
+        "D": "A revogação de isenção tributária equipara-se, para todos os efeitos, à instituição ou majoração de tributo, exigindo a observância do princípio da anterioridade conforme jurisprudência uníssona do STF.",
+        "E": "As alterações na base de cálculo do IPTU e do IPVA submetem-se à anterioridade nonagesimal, mas são excepcionadas da anterioridade anual."
+      },
+      "gabarito": "C",
+      "justificativa": "A alternativa C está correta: o IPI é exceção à anterioridade anual (art. 150, §1º, da CF/88), mas se submete à nonagesimal. A alternativa A está incorreta — o IR é exceção à nonagesimal (art. 150, §1º), submetendo-se apenas à anual. A alternativa B inverte a regra: as contribuições sociais para a seguridade social são exceção à anterioridade anual, mas se submetem à nonagesimal (anterioridade mitigada do art. 195, §6º). A alternativa D está incorreta: a jurisprudência do STF não é uníssona sobre revogação de isenção; o tema é controvertido e a Súmula 615 do STF, embora antiga, indicava que a revogação de isenção do ICMS não se submetia à anterioridade. A alternativa E inverte: alterações na BC do IPTU e IPVA são exceção à NONAGESIMAL (art. 150, §1º), submetendo-se à anterioridade anual.",
+      "fonte_descricao": "CF/88, art. 150, III, b e c, e §1º; art. 195, §6º",
+      "fonte_url": "https://www.planalto.gov.br/ccivil_03/constituicao/constituicao.htm",
+      "alerta_revisao": false,
+      "origem": "manual"
+    },
+    {
+      "disciplina": "Direito Tributário",
+      "sub_topico": "Competência tributária — disposições gerais e especiais",
+      "enunciado": "A respeito da competência tributária e da capacidade tributária ativa, conforme disciplinado pelo Código Tributário Nacional e pela doutrina consolidada, é CORRETO afirmar:",
+      "alternativas": {
+        "A": "A competência tributária é delegável a outra pessoa jurídica de direito público, desde que mediante lei específica e observados os limites constitucionais.",
+        "B": "O não exercício da competência tributária pelo ente competente autoriza outro ente da federação a instituir o tributo respectivo, em homenagem ao princípio do federalismo cooperativo.",
+        "C": "A competência tributária é indelegável, mas as funções de arrecadar, fiscalizar tributos e executar leis, serviços, atos ou decisões administrativas em matéria tributária podem ser conferidas a outra pessoa jurídica de direito público.",
+        "D": "A capacidade tributária ativa, assim como a competência tributária, é matéria reservada à Constituição, não podendo ser delegada nem mesmo por meio de lei.",
+        "E": "A delegação da competência tributária implica transferência da titularidade do tributo, mas não das garantias e privilégios processuais, que permanecem com o ente delegante."
+      },
+      "gabarito": "C",
+      "justificativa": "A alternativa C reproduz fielmente o art. 7º, caput, do CTN: 'A competência tributária é indelegável, salvo atribuição das funções de arrecadar ou fiscalizar tributos, ou de executar leis, serviços, atos ou decisões administrativas em matéria tributária, conferida por uma pessoa jurídica de direito público a outra'. A alternativa A está incorreta porque a competência é indelegável (CTN, art. 7º). A alternativa B está incorreta — o art. 8º do CTN dispõe que o não exercício da competência tributária NÃO autoriza outro ente a exercê-la. A alternativa D confunde os institutos: a capacidade tributária ativa (titularidade para exigir o tributo) é delegável; só a competência (poder de instituir) é indelegável. A alternativa E está incorreta: nos termos do art. 7º, §1º, a delegação compreende as garantias e privilégios processuais.",
+      "fonte_descricao": "CTN, arts. 7º e 8º",
+      "fonte_url": "https://www.planalto.gov.br/ccivil_03/leis/l5172compilado.htm",
+      "alerta_revisao": false,
+      "origem": "manual"
+    },
+    {
+      "disciplina": "Direito Tributário",
+      "sub_topico": "Modalidades de lançamento (ofício, declaração, homologação)",
+      "enunciado": "O lançamento tributário, conforme disciplinado pelo Código Tributário Nacional, comporta diferentes modalidades. Sobre as modalidades de lançamento e sua aplicação aos tributos brasileiros, é CORRETO afirmar:",
+      "alternativas": {
+        "A": "No lançamento por homologação, o sujeito passivo apenas presta declarações ao fisco, cabendo à autoridade administrativa apurar o montante devido e notificar o contribuinte para pagamento.",
+        "B": "O lançamento de ofício é privativo das hipóteses em que o sujeito passivo deixa de cumprir, total ou parcialmente, obrigação acessória, não se aplicando aos tributos cuja apuração compete originariamente à autoridade fiscal.",
+        "C": "O Imposto sobre a Propriedade Predial e Territorial Urbana (IPTU) é tributo sujeito a lançamento por declaração, no qual o sujeito passivo informa anualmente os dados do imóvel ao fisco municipal.",
+        "D": "No lançamento por homologação, o sujeito passivo antecipa o pagamento do tributo sem prévio exame da autoridade administrativa, operando-se a homologação tácita pelo decurso do prazo de cinco anos contados da ocorrência do fato gerador, salvo comprovada ocorrência de dolo, fraude ou simulação.",
+        "E": "O Imposto sobre a Transmissão Causa Mortis e Doação (ITCD) é tributo sujeito a lançamento por homologação em todos os Estados da federação, em razão de sua natureza patrimonial."
+      },
+      "gabarito": "D",
+      "justificativa": "A alternativa D reproduz o disposto no art. 150 do CTN, §4º: o lançamento por homologação caracteriza-se pelo pagamento antecipado do tributo pelo sujeito passivo, com homologação tácita após cinco anos do fato gerador, salvo dolo, fraude ou simulação. A alternativa A descreve incorretamente o lançamento por homologação — a definição dada corresponde mais ao lançamento por declaração (CTN, art. 147). A alternativa B está incorreta: o lançamento de ofício aplica-se a diversos tributos onde a apuração é feita diretamente pela administração (IPTU, IPVA), não estando restrito a hipóteses de descumprimento de obrigação acessória. A alternativa C está incorreta: o IPTU é tributo lançado de ofício pela administração municipal, não por declaração. A alternativa E está incorreta: o ITCD é tipicamente lançado por declaração na maioria dos Estados, embora a sistemática possa variar.",
+      "fonte_descricao": "CTN, arts. 142, 147, 149 e 150",
+      "fonte_url": "https://www.planalto.gov.br/ccivil_03/leis/l5172compilado.htm",
+      "alerta_revisao": false,
+      "origem": "manual"
+    },
+    {
+      "disciplina": "Direito Tributário",
+      "sub_topico": "Suspensão da exigibilidade do crédito tributário",
+      "enunciado": "Acerca das hipóteses de suspensão da exigibilidade do crédito tributário, previstas no Código Tributário Nacional, é CORRETO afirmar:",
+      "alternativas": {
+        "A": "A concessão de medida liminar em mandado de segurança suspende a exigibilidade do crédito tributário e dispensa o cumprimento das obrigações acessórias dependentes da obrigação principal cujo crédito foi suspenso.",
+        "B": "O parcelamento concedido na forma e condições estabelecidas em lei específica suspende a exigibilidade do crédito tributário, mas o seu inadimplemento implica o restabelecimento da exigibilidade independentemente de notificação prévia.",
+        "C": "A moratória, a concessão de medida liminar em mandado de segurança, a concessão de medida liminar ou de tutela antecipada em outras espécies de ação judicial, e o parcelamento estão entre as causas de suspensão da exigibilidade do crédito tributário.",
+        "D": "O depósito do montante integral do crédito tributário, ainda que parcial, suspende a sua exigibilidade na proporção do valor depositado.",
+        "E": "As reclamações e os recursos administrativos suspendem a exigibilidade do crédito tributário apenas se interpostos com efeito suspensivo expressamente concedido pela autoridade fiscal."
+      },
+      "gabarito": "C",
+      "justificativa": "A alternativa C lista corretamente algumas das hipóteses do art. 151 do CTN. As hipóteses completas são: I - moratória; II - depósito integral; III - reclamações e recursos administrativos nos termos das leis processuais; IV - liminar em mandado de segurança; V - liminar ou tutela antecipada em outras ações; VI - parcelamento. A alternativa A está incorreta porque o art. 151, parágrafo único, dispõe que a suspensão NÃO dispensa o cumprimento das obrigações acessórias. A alternativa B está incorreta — a perda do parcelamento normalmente exige notificação ou outra formalidade prevista em lei. A alternativa D está incorreta: nos termos da Súmula 112 do STJ, o depósito que suspende a exigibilidade deve ser INTEGRAL e em dinheiro. A alternativa E está incorreta: as reclamações e recursos administrativos suspendem a exigibilidade nos termos das leis reguladoras do processo tributário administrativo, independentemente de concessão de efeito suspensivo individualizado.",
+      "fonte_descricao": "CTN, art. 151 e parágrafo único; Súmula 112 do STJ",
+      "fonte_url": "https://www.planalto.gov.br/ccivil_03/leis/l5172compilado.htm",
+      "alerta_revisao": false,
+      "origem": "manual"
+    },
+    {
+      "disciplina": "Direito Constitucional, Administrativo, Civil e Penal",
+      "sub_topico": "Direitos e garantias fundamentais",
+      "enunciado": "Acerca dos direitos e garantias fundamentais previstos na Constituição Federal de 1988 e suas características reconhecidas pela doutrina e jurisprudência, é CORRETO afirmar:",
+      "alternativas": {
+        "A": "Os direitos fundamentais possuem caráter absoluto, não podendo sofrer qualquer espécie de restrição ou ponderação, ainda que diante de outros direitos fundamentais conflitantes.",
+        "B": "Os direitos fundamentais caracterizam-se, entre outros aspectos, pela historicidade, universalidade, inalienabilidade, imprescritibilidade e irrenunciabilidade, sem prejuízo de sua relativização em situações de conflito ou colisão com outros direitos de mesma estatura.",
+        "C": "Os direitos sociais previstos no art. 6º da Constituição Federal não constituem direitos fundamentais em sentido próprio, sendo apenas normas programáticas dependentes de regulamentação infraconstitucional para sua exigibilidade.",
+        "D": "A aplicabilidade imediata das normas definidoras dos direitos e garantias fundamentais, prevista no §1º do art. 5º, aplica-se exclusivamente aos direitos individuais e coletivos do art. 5º, não alcançando os direitos sociais, de nacionalidade ou políticos.",
+        "E": "Os tratados internacionais de direitos humanos possuem status equivalente ao de lei ordinária, salvo quando aprovados pelo Congresso Nacional pelo rito do art. 5º, §3º, hipótese em que adquirem status equivalente ao de norma supraconstitucional."
+      },
+      "gabarito": "B",
+      "justificativa": "A alternativa B descreve corretamente as características clássicas dos direitos fundamentais reconhecidas pela doutrina (José Afonso da Silva, Ingo Sarlet, entre outros). A alternativa A está incorreta — é entendimento pacífico que os direitos fundamentais NÃO são absolutos e podem sofrer restrições, especialmente em hipóteses de colisão (técnica da ponderação). A alternativa C está incorreta: os direitos sociais são direitos fundamentais (Capítulo II do Título II da CF/88) e possuem aplicabilidade direta nos seus núcleos essenciais, embora alguns aspectos exijam regulamentação. A alternativa D está incorreta: o §1º do art. 5º aplica-se às normas definidoras de direitos fundamentais em geral, alcançando direitos sociais, políticos e de nacionalidade nos limites de sua densidade normativa. A alternativa E está incorreta: tratados aprovados pelo rito do §3º têm status equivalente ao de EMENDA CONSTITUCIONAL (não supraconstitucional); os demais tratados de direitos humanos, segundo o STF (RE 466.343), têm status SUPRALEGAL (acima das leis, abaixo da CF).",
+      "fonte_descricao": "CF/88, art. 5º, caput e §§ 1º, 2º e 3º; STF RE 466.343",
+      "fonte_url": "https://www.planalto.gov.br/ccivil_03/constituicao/constituicao.htm",
+      "alerta_revisao": false,
+      "origem": "manual"
+    },
+    {
+      "disciplina": "Direito Constitucional, Administrativo, Civil e Penal",
+      "sub_topico": "Princípios expressos e implícitos da administração pública",
+      "enunciado": "Sobre os princípios da Administração Pública previstos no art. 37, caput, da Constituição Federal de 1988 e os princípios implícitos reconhecidos pela doutrina e jurisprudência, é CORRETO afirmar:",
+      "alternativas": {
+        "A": "O princípio da eficiência foi inserido no caput do art. 37 da Constituição Federal pela Emenda Constitucional nº 19/1998, juntando-se aos princípios da legalidade, impessoalidade, moralidade e publicidade já originalmente previstos.",
+        "B": "Os princípios da razoabilidade e da proporcionalidade são expressamente previstos no caput do art. 37, ao lado da legalidade, impessoalidade, moralidade, publicidade e eficiência.",
+        "C": "O princípio da legalidade, no âmbito da Administração Pública, possui conteúdo idêntico ao princípio da legalidade aplicável aos particulares, podendo o administrador agir em qualquer matéria desde que não haja vedação legal expressa.",
+        "D": "O princípio da publicidade veda, em qualquer hipótese, a manutenção de sigilo de informações no âmbito da Administração Pública, em razão da prevalência do interesse coletivo sobre o particular.",
+        "E": "O princípio da impessoalidade, segundo a doutrina majoritária e a jurisprudência do STF, refere-se exclusivamente à vedação ao nepotismo, não alcançando a atuação publicitária dos agentes públicos."
+      },
+      "gabarito": "A",
+      "justificativa": "A alternativa A está correta: o caput original do art. 37 mencionava os princípios da legalidade, impessoalidade, moralidade e publicidade. A EC nº 19/1998 acrescentou o princípio da eficiência (formando o conhecido acrônimo LIMPE). A alternativa B está incorreta — razoabilidade e proporcionalidade são princípios IMPLÍCITOS, não constando expressamente do art. 37, caput (embora reconhecidos pela doutrina e jurisprudência). A alternativa C está incorreta: o princípio da legalidade na Administração tem conteúdo OPOSTO ao do particular — enquanto o particular pode fazer tudo que a lei não proíbe, a Administração só pode fazer o que a lei autoriza ou determina. A alternativa D está incorreta: a CF prevê hipóteses de sigilo legítimo (art. 5º, X, XII, XXXIII; LGPD; sigilo fiscal etc.). A alternativa E está incorreta: o princípio da impessoalidade tem múltiplas dimensões — vedação ao tratamento privilegiado/discriminatório, vedação ao nepotismo, vedação à promoção pessoal em propaganda institucional (art. 37, §1º), entre outras.",
+      "fonte_descricao": "CF/88, art. 37, caput e §1º; EC 19/1998",
+      "fonte_url": "https://www.planalto.gov.br/ccivil_03/constituicao/constituicao.htm",
+      "alerta_revisao": false,
+      "origem": "manual"
+    },
+    {
+      "disciplina": "Direito Constitucional, Administrativo, Civil e Penal",
+      "sub_topico": "Organização político-administrativa do Estado",
+      "enunciado": "Acerca da organização político-administrativa da República Federativa do Brasil prevista na Constituição Federal de 1988, é CORRETO afirmar:",
+      "alternativas": {
+        "A": "A organização político-administrativa da República Federativa do Brasil compreende a União, os Estados, o Distrito Federal, os Municípios e os Territórios Federais, todos autônomos nos termos da Constituição.",
+        "B": "Os Territórios Federais integram a União e podem ser divididos em Municípios, mas não constituem entes autônomos da federação brasileira, ao contrário dos Estados, do Distrito Federal e dos Municípios.",
+        "C": "Os Municípios brasileiros, ao contrário dos Estados e do Distrito Federal, não possuem autonomia financeira própria, dependendo integralmente das transferências constitucionais para o exercício de suas competências.",
+        "D": "O Distrito Federal possui apenas as competências legislativas reservadas aos Estados, sendo-lhe vedada a instituição dos tributos atribuídos aos Municípios em razão de sua natureza híbrida.",
+        "E": "A criação, a incorporação, a fusão e o desmembramento de Municípios podem ser realizados por lei municipal, observados os requisitos previstos na Constituição Federal e na legislação federal pertinente."
+      },
+      "gabarito": "B",
+      "justificativa": "A alternativa B está correta: o art. 18 da CF/88 estabelece que a organização político-administrativa compreende União, Estados, Distrito Federal e Municípios — todos autônomos. Os Territórios (art. 18, §2º) integram a União e podem ser divididos em Municípios, mas NÃO são entes autônomos da federação. A alternativa A está incorreta porque inclui erroneamente os Territórios entre os entes autônomos. A alternativa C está incorreta: Municípios têm autonomia financeira (art. 30, III), instituem seus próprios tributos (art. 156) e gerenciam suas próprias receitas. A alternativa D está incorreta: o Distrito Federal acumula as competências legislativas reservadas aos Estados E aos Municípios (art. 32, §1º), incluindo a competência tributária para instituir os tributos municipais (ISS, IPTU, ITBI). A alternativa E está incorreta: a criação, incorporação, fusão e desmembramento de Municípios depende de LEI ESTADUAL, observados os requisitos do art. 18, §4º (período definido por lei complementar federal, consulta plebiscitária às populações envolvidas, divulgação de Estudos de Viabilidade Municipal).",
+      "fonte_descricao": "CF/88, art. 18, caput e §§ 2º e 4º; art. 32, §1º",
+      "fonte_url": "https://www.planalto.gov.br/ccivil_03/constituicao/constituicao.htm",
+      "alerta_revisao": false,
+      "origem": "manual"
+    },
+    {
+      "disciplina": "Língua Portuguesa",
+      "sub_topico": "Concordância nominal e verbal",
+      "enunciado": "Considere as orações abaixo, quanto à concordância verbal:\n\nI. Faz cinco anos que ela trabalha no setor de auditoria.\nII. Hão de existir formas mais eficientes de comunicação interna.\nIII. A maioria dos servidores aprovou a nova diretriz administrativa.\nIV. Mais de um candidato compareceram à sessão de esclarecimentos.\nV. Tratam-se de questões complexas que exigem análise aprofundada.\n\nEstão CORRETAS, segundo a norma culta da língua portuguesa, apenas:",
+      "alternativas": {
+        "A": "I e II",
+        "B": "I, II e III",
+        "C": "II, III e V",
+        "D": "I, III e IV",
+        "E": "Todas as orações estão corretas"
+      },
+      "gabarito": "B",
+      "justificativa": "Análise: I — CORRETA: o verbo 'fazer' indicando tempo decorrido é impessoal e fica no singular ('Faz cinco anos'). II — CORRETA: o verbo 'haver' no sentido de existir é impessoal, mas quando usado em locução verbal com auxiliar ('hão de existir'), o auxiliar concorda com o sujeito ('formas'); aqui 'hão de' é correto por ser locução com 'haver de + infinitivo' que pode flexionar. III — CORRETA: com expressões partitivas ('a maioria de'), aceita-se concordância tanto no singular ('aprovou') quanto no plural ('aprovaram'). IV — INCORRETA: a expressão 'mais de um' exige verbo no SINGULAR, não no plural ('Mais de um candidato compareceu'). V — INCORRETA: o verbo 'tratar-se de' é impessoal (não admite sujeito), portanto fica invariável no singular ('Trata-se de questões complexas'). Portanto, estão corretas apenas I, II e III.",
+      "fonte_descricao": "Norma culta — Cegalla; Bechara",
+      "fonte_url": "",
+      "alerta_revisao": false,
+      "origem": "manual"
+    },
+    {
+      "disciplina": "Língua Portuguesa",
+      "sub_topico": "Regência nominal e verbal",
+      "enunciado": "Em relação à regência verbal segundo a norma culta da língua portuguesa, assinale a alternativa CORRETA:",
+      "alternativas": {
+        "A": "O servidor preferia mais trabalhar na fiscalização do que no atendimento ao público.",
+        "B": "Os candidatos aspiram o cargo de auditor há vários anos.",
+        "C": "A comissão visa a esclarecer todas as dúvidas dos contribuintes em tempo hábil.",
+        "D": "Os fiscais obedeceram o regulamento interno sem questionamentos.",
+        "E": "Ninguém o assistiu durante a sessão administrativa, embora estivesse claramente perdido."
+      },
+      "gabarito": "C",
+      "justificativa": "Análise: A alternativa A está INCORRETA — o verbo 'preferir' é transitivo direto e indireto, sendo regido pela preposição 'a' (preferir X a Y), não admitindo 'do que' nem reforço com 'mais' ('preferia trabalhar na fiscalização A trabalhar no atendimento'). A alternativa B está INCORRETA: 'aspirar' no sentido de 'desejar/almejar' é transitivo INDIRETO, exigindo a preposição 'a' ('aspiram AO cargo'). A alternativa C está CORRETA: 'visar' no sentido de 'ter por objetivo' é transitivo indireto, regido pela preposição 'a' ('visa A esclarecer'). A alternativa D está INCORRETA: 'obedecer' é transitivo INDIRETO, exigindo 'a' ('obedeceram AO regulamento'). A alternativa E está INCORRETA: 'assistir' no sentido de 'ajudar/socorrer' é transitivo direto ('assistiu-o' está correto sintaticamente, mas o sentido aqui é de 'estar presente / ver', que exige a preposição 'a' — 'assistiu A ele' ou 'assistiu A sessão'); a frase original confunde os usos.",
+      "fonte_descricao": "Norma culta — Bechara; Cegalla",
+      "fonte_url": "",
+      "alerta_revisao": false,
+      "origem": "manual"
+    }
+  ]
+}
