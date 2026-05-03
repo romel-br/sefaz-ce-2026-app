@@ -20,6 +20,7 @@ from db.database import get_session
 from db.models import BlocoEdital, Disciplina, PerfilUsuario, SubTopico
 from modules.auth import exigir_login
 from modules.question_generator import gerar_questoes
+from modules.version import get_build_info
 
 
 st.set_page_config(
@@ -36,6 +37,14 @@ user = exigir_login()
 if user.perfil != PerfilUsuario.ADMIN:
     st.error("⛔ Acesso restrito ao admin.")
     st.stop()
+
+# Build info na sidebar (admin)
+with st.sidebar:
+    build = get_build_info()
+    st.caption(
+        f"🛠️ **Build:** `{build.short_sha}` ({build.ref_name})  \n"
+        f"📅 **Deploy:** {build.deploy_time.strftime('%d/%m %H:%M UTC') if build.deploy_time else '?'}"
+    )
 
 
 # ============================================================================

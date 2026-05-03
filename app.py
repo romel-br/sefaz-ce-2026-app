@@ -19,8 +19,9 @@ sys.path.insert(0, str(Path(__file__).parent))
 import streamlit as st
 
 from db.database import init_db
-from modules.auth import exigir_login, logout
 from db.models import PerfilUsuario
+from modules.auth import exigir_login, logout
+from modules.version import get_build_info
 
 
 st.set_page_config(
@@ -61,6 +62,14 @@ with st.sidebar:
     if st.button("Sair", use_container_width=True):
         logout()
     st.divider()
+
+    # Build info — admin only (info técnica de versionamento)
+    if user.perfil == PerfilUsuario.ADMIN:
+        build = get_build_info()
+        st.caption(
+            f"🛠️ **Build:** `{build.short_sha}` ({build.ref_name})  \n"
+            f"📅 **Deploy:** {build.deploy_time.strftime('%d/%m %H:%M UTC') if build.deploy_time else '?'}"
+        )
 
 
 # ============================================================================
