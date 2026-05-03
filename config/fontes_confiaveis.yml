@@ -1,0 +1,58 @@
+# Whitelist de domínios confiáveis para geração de questões e material de estudo.
+# O sistema só cita fontes destes domínios. Qualquer outro é descartado.
+# Atualizar este arquivo conforme novas fontes confiáveis surgirem.
+
+dominios_oficiais:
+  # Federal
+  - planalto.gov.br
+  - in.gov.br
+  - presidencia.gov.br
+  - tcu.gov.br
+  - cgu.gov.br
+  - stf.jus.br
+  - stj.jus.br
+  - tse.jus.br
+  - cnj.jus.br
+  - senado.leg.br
+  - camara.leg.br
+  - bcb.gov.br
+  - tesouro.fazenda.gov.br
+  - gov.br
+
+  # Ceará (legislação tributária estadual)
+  - sefaz.ce.gov.br
+  - cge.ce.gov.br
+  - tce.ce.gov.br
+  - al.ce.gov.br
+  - ceara.gov.br
+
+  # Contabilidade pública
+  - cfc.org.br        # Conselho Federal de Contabilidade
+  - portalcfc.org.br
+  - cpc.org.br        # Comitê de Pronunciamentos Contábeis
+
+  # Concursos / banca
+  - concursosfcc.com.br
+  - fcc.org.br
+
+dominios_doutrina:
+  # Doutrina e jurisprudência consolidadas (uso secundário, sempre marcado como interpretação)
+  - conjur.com.br
+  - migalhas.com.br
+  - jusbrasil.com.br
+  - dizerodireito.com.br
+  - direitodoestado.com.br
+
+# Domínios explicitamente bloqueados (mesmo que apareçam em busca)
+dominios_bloqueados:
+  - reddit.com
+  - quora.com
+  - facebook.com
+  - twitter.com
+  - x.com
+  - instagram.com
+  - tiktok.com
+  - blogspot.com
+  - wordpress.com
+  - medium.com
+  - youtube.com  # exceto canais oficiais — verificar manualmente

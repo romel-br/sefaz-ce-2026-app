@@ -1,0 +1,104 @@
+# Parâmetros para cálculo da Nota Padronizada (NP)
+# Fórmula oficial do edital (item 9.5):
+#   NP = [(Acertos - Média do grupo) / Desvio Padrão do grupo] × 10 + 50
+# Score final: NP_Gerais × 1 + NP_Específicos × 2
+# Corte de habilitação: ≥ 150 pontos (= candidato mediano)
+#
+# Os valores abaixo são ESTIMATIVAS baseadas em concursos FCC Sefaz anteriores
+# (CE, SP, GO últimos 3 ciclos). Devem ser refinados conforme histórico real.
+
+# Média e desvio padrão estimados de acertos do grupo de candidatos
+# Valores baseados em concursos similares: candidato mediano acerta ~50% das questões
+conhecimentos_gerais:
+  total_questoes: 80
+  media_acertos_grupo: 40    # 50% de 80
+  desvio_padrao_grupo: 10    # variação típica observada em provas FCC
+
+conhecimentos_especificos:
+  total_questoes: 80
+  media_acertos_grupo: 38    # ligeiramente abaixo (especialistas mais polarizados)
+  desvio_padrao_grupo: 12    # maior dispersão (gap entre quem estudou e quem não)
+
+# Pesos (definidos pelo edital, NÃO alterar)
+peso_gerais: 1
+peso_especificos: 2
+
+# Faixas de chance de aprovação (com base no score final)
+# Corte oficial = 150 (candidato mediano = NP 50 em ambos os blocos × pesos = 50+100=150)
+faixas:
+  - nome: "Pouca chance"
+    cor: "#dc2626"
+    emoji: "🔴"
+    score_min: 0
+    score_max: 139
+    mensagem: "Ainda há um caminho longo. Foque nos sub-tópicos críticos primeiro."
+
+  - nome: "Chance média"
+    cor: "#ea580c"
+    emoji: "🟠"
+    score_min: 140
+    score_max: 154
+    mensagem: "Você está perto do corte. Cada ponto agora vale muito."
+
+  - nome: "Alta chance"
+    cor: "#eab308"
+    emoji: "🟡"
+    score_min: 155
+    score_max: 174
+    mensagem: "Confortavelmente acima do corte. Foque em consolidar as áreas dominadas e levantar as fracas."
+
+  - nome: "Vai passar!"
+    cor: "#16a34a"
+    emoji: "🟢"
+    score_min: 175
+    score_max: 999
+    mensagem: "Excelente desempenho. Mantenha o ritmo e prepare-se para a discursiva."
+
+# Níveis de proficiência por sub-tópico
+niveis_proficiencia:
+  - nome: "Crítico"
+    cor: "#dc2626"
+    pct_min: 0
+    pct_max: 49
+  - nome: "Em desenvolvimento"
+    cor: "#ea580c"
+    pct_min: 50
+    pct_max: 69
+  - nome: "Satisfatório"
+    cor: "#eab308"
+    pct_min: 70
+    pct_max: 84
+  - nome: "Dominado"
+    cor: "#16a34a"
+    pct_min: 85
+    pct_max: 100
+
+# Configurações de simulado
+simulados:
+  presets_curtos:
+    rapido:
+      nome: "Rápido"
+      questoes: 10
+      tempo_minutos: 15
+    medio:
+      nome: "Médio"
+      questoes: 20
+      tempo_minutos: 30
+    longo:
+      nome: "Longo"
+      questoes: 40
+      tempo_minutos: 60
+
+  completo:
+    questoes_gerais: 80
+    questoes_especificos: 80
+    tempo_horas: 5
+
+  manutencao:
+    # No modo "áreas fracas", % de questões injetadas das áreas dominadas
+    pct_min: 10
+    pct_max: 20
+
+# Alertas
+alertas:
+  dias_sem_pratica_para_alerta: 14
