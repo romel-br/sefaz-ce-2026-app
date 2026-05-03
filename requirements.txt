@@ -9,4 +9,4 @@ python-dotenv==1.0.1
 requests==2.32.3
 beautifulsoup4==4.12.3
 bcrypt==4.2.1
-sqlalchemy-libsql>=0.1.0  # Linux wheel disponível; build local em Windows requer Rust
+psycopg2-binary==2.9.10
