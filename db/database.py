@@ -39,8 +39,21 @@ def get_engine():
     global _engine
     if _engine is None:
         url = _get_database_url()
-        connect_args = {"check_same_thread": False} if url.startswith("sqlite:") else {}
-        _engine = create_engine(url, connect_args=connect_args, echo=False)
+        is_libsql = "libsql" in url
+        is_sqlite_local = url.startswith("sqlite:") and not is_libsql
+
+        connect_args: dict = {}
+        if is_sqlite_local:
+            connect_args["check_same_thread"] = False
+
+        engine_kwargs: dict = {"connect_args": connect_args, "echo": False}
+
+        # libSQL/Turso não suporta `PRAGMA read_uncommitted` que o SQLAlchemy
+        # invoca para detectar isolation level. Setamos AUTOCOMMIT para pular essa fase.
+        if is_libsql:
+            engine_kwargs["isolation_level"] = "AUTOCOMMIT"
+
+        _engine = create_engine(url, **engine_kwargs)
     return _engine
 
 
