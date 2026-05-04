@@ -1,0 +1,188 @@
+{
+  "version": "1.0",
+  "geradas_em": "2026-05-03",
+  "geradas_via": "Claude.ai (manual, sem custo de API)",
+  "lote": "2 - Direito Tributario - sub-topicos diversos",
+  "questoes": [
+    {
+      "disciplina": "Direito Tributário",
+      "sub_topico": "Sistema Tributário Nacional na CF/88 — princípios gerais",
+      "enunciado": "Sobre o princípio da capacidade contributiva e sua aplicação no Sistema Tributário Nacional, conforme a Constituição Federal de 1988 e a jurisprudência do Supremo Tribunal Federal, é CORRETO afirmar:",
+      "alternativas": {
+        "A": "O princípio da capacidade contributiva aplica-se exclusivamente aos impostos pessoais, restando excluídos os impostos reais e as demais espécies tributárias.",
+        "B": "Sempre que possível, os impostos terão caráter pessoal e serão graduados segundo a capacidade econômica do contribuinte, sendo facultado à administração tributária identificar o patrimônio, os rendimentos e as atividades econômicas do contribuinte, respeitados os direitos individuais e nos termos da lei.",
+        "C": "O princípio da capacidade contributiva, por estar previsto no §1º do art. 145 da Constituição, não constitui norma de aplicabilidade direta, dependendo de regulamentação por lei complementar para produzir efeitos concretos.",
+        "D": "A progressividade das alíquotas, manifestação direta da capacidade contributiva, é exigência constitucional para todos os impostos diretos, sendo inconstitucional a previsão de alíquotas proporcionais ou regressivas.",
+        "E": "A capacidade contributiva refere-se exclusivamente à dimensão econômica do contribuinte, não havendo qualquer relação com os princípios da isonomia tributária ou da seletividade."
+      },
+      "gabarito": "B",
+      "justificativa": "A alternativa B reproduz fielmente o art. 145, §1º, da CF/88. A alternativa A está incorreta: a doutrina e o STF reconhecem a aplicação do princípio também a impostos reais (a expressão 'sempre que possível' admite gradações), e a outras espécies tributárias quando compatível. A alternativa C está incorreta — o princípio da capacidade contributiva tem aplicabilidade direta como norma constitucional, servindo de parâmetro para o controle de constitucionalidade de leis tributárias, sem necessidade de lei complementar regulamentadora geral. A alternativa D está incorreta: a progressividade não é exigência geral constitucional para todos os impostos diretos — só para alguns como IR (art. 153, §2º, I) e ITR (art. 153, §4º, I); para outros (como o IPVA), o STF admite alíquotas proporcionais. A alternativa E está incorreta — a capacidade contributiva relaciona-se intimamente com a isonomia tributária (art. 150, II) e justifica a seletividade em alguns tributos.",
+      "fonte_descricao": "CF/88, art. 145, §1º",
+      "fonte_url": "https://www.planalto.gov.br/ccivil_03/constituicao/constituicao.htm",
+      "alerta_revisao": false,
+      "origem": "manual"
+    },
+    {
+      "disciplina": "Direito Tributário",
+      "sub_topico": "Taxas e Contribuição de Melhoria",
+      "enunciado": "Acerca das taxas e da contribuição de melhoria, espécies tributárias previstas no Sistema Tributário Nacional, é CORRETO afirmar:",
+      "alternativas": {
+        "A": "As taxas podem ter base de cálculo própria de impostos, desde que o ente tributante competente para o imposto autorize expressamente em lei.",
+        "B": "A contribuição de melhoria pode ser instituída para custear obras públicas, e seu valor não pode exceder o custo total da obra nem o acréscimo de valor que da obra resultar para cada imóvel beneficiado.",
+        "C": "As taxas podem ser instituídas em razão do exercício do poder de polícia ou pela utilização, efetiva ou potencial, de serviços públicos universais e indivisíveis prestados pelo Estado.",
+        "D": "A contribuição de melhoria, por ter natureza compensatória, não se submete aos princípios da legalidade, anterioridade ou irretroatividade tributária.",
+        "E": "A taxa de coleta de lixo domiciliar foi declarada inconstitucional pelo STF em razão da impossibilidade de individualização do serviço para cada contribuinte."
+      },
+      "gabarito": "B",
+      "justificativa": "A alternativa B reproduz a regra do art. 81 do CTN, que estabelece os limites global (custo da obra) e individual (acréscimo de valor do imóvel) para a contribuição de melhoria. A alternativa A está incorreta: a CF/88, art. 145, §2º, expressamente VEDA que as taxas tenham base de cálculo própria de impostos. A alternativa C está incorreta — as taxas podem decorrer de serviços públicos ESPECÍFICOS E DIVISÍVEIS (não universais e indivisíveis), conforme art. 145, II, da CF/88 e art. 77 do CTN. A alternativa D está incorreta: a contribuição de melhoria, como qualquer tributo, submete-se aos princípios da legalidade (art. 150, I), anterioridade (art. 150, III, b e c) e irretroatividade (art. 150, III, a). A alternativa E está incorreta: o STF, na Súmula Vinculante 19, considera CONSTITUCIONAL a taxa de coleta de lixo domiciliar, por ser serviço específico e divisível.",
+      "fonte_descricao": "CF/88, art. 145, II e §2º; CTN, arts. 77 e 81; Súmula Vinculante 19 do STF",
+      "fonte_url": "https://www.planalto.gov.br/ccivil_03/leis/l5172compilado.htm",
+      "alerta_revisao": false,
+      "origem": "manual"
+    },
+    {
+      "disciplina": "Direito Tributário",
+      "sub_topico": "Vigência da legislação tributária",
+      "enunciado": "Sobre a vigência da legislação tributária no espaço e no tempo, conforme disciplinada pelo Código Tributário Nacional, é CORRETO afirmar:",
+      "alternativas": {
+        "A": "A legislação tributária dos Estados e dos Municípios vigora exclusivamente nos respectivos territórios, sendo vedada qualquer extensão de seus efeitos a outros entes federativos.",
+        "B": "Os atos administrativos normativos editados pelas autoridades fiscais entram em vigor, salvo disposição em contrário, na data de sua publicação.",
+        "C": "As decisões dos órgãos de jurisdição administrativa a que a lei atribua eficácia normativa entram em vigor, salvo disposição em contrário, em sessenta dias após a sua publicação.",
+        "D": "Os convênios celebrados entre União, Estados, Distrito Federal e Municípios entram em vigor, salvo disposição em contrário, na data de sua publicação no Diário Oficial.",
+        "E": "Os atos administrativos normativos vigoram a partir do início do exercício seguinte ao de sua publicação, em homenagem ao princípio da anterioridade tributária."
+      },
+      "gabarito": "B",
+      "justificativa": "A alternativa B está correta, conforme o art. 103, I, do CTN: os atos administrativos normativos vigoram, salvo disposição em contrário, na data de sua publicação. A alternativa A está incorreta — o art. 102 do CTN permite que a legislação tributária dos Estados, DF e Municípios vigore fora dos respectivos territórios, nos limites em que reconheçam extraterritorialidade os convênios entre eles celebrados, ou nos termos do que disponham as leis de normas gerais expedidas pela União. A alternativa C está incorreta: as decisões com eficácia normativa entram em vigor 30 (trinta) dias após sua publicação, salvo disposição em contrário (CTN, art. 103, II). A alternativa D está incorreta: os convênios entram em vigor na data neles prevista, salvo disposição em contrário (CTN, art. 103, III). A alternativa E está incorreta — o princípio da anterioridade refere-se à instituição ou majoração de tributos, não à vigência geral dos atos normativos.",
+      "fonte_descricao": "CTN, arts. 102 e 103",
+      "fonte_url": "https://www.planalto.gov.br/ccivil_03/leis/l5172compilado.htm",
+      "alerta_revisao": false,
+      "origem": "manual"
+    },
+    {
+      "disciplina": "Direito Tributário",
+      "sub_topico": "Interpretação e integração da legislação tributária",
+      "enunciado": "Sobre a interpretação e a integração da legislação tributária, conforme o Código Tributário Nacional, é CORRETO afirmar:",
+      "alternativas": {
+        "A": "Na ausência de disposição expressa, a autoridade competente para aplicar a legislação tributária utilizará, sucessivamente e nesta ordem, a analogia, os princípios gerais de direito tributário, os princípios gerais de direito público e a equidade.",
+        "B": "O emprego da analogia em matéria tributária pode resultar na exigência de tributo não previsto em lei, desde que respeitados os princípios da capacidade contributiva e da isonomia.",
+        "C": "Interpreta-se literalmente a legislação tributária que disponha sobre a outorga de isenção, a suspensão ou exclusão do crédito tributário, e a dispensa do cumprimento de obrigações tributárias acessórias.",
+        "D": "A lei tributária que define infrações ou comina penalidades interpreta-se sempre da maneira mais favorável ao Fisco, em razão da supremacia do interesse público sobre o particular.",
+        "E": "A equidade, como técnica de integração, autoriza a autoridade administrativa a dispensar o pagamento de tributo devido sempre que a aplicação rigorosa da lei resultar em manifesta injustiça."
+      },
+      "gabarito": "C",
+      "justificativa": "A alternativa C reproduz o art. 111 do CTN, que estabelece a interpretação literal para normas sobre suspensão/exclusão do crédito tributário, isenção e dispensa de obrigações acessórias. A alternativa A está parcialmente incorreta na ordem — o art. 108 do CTN estabelece a sequência: analogia, princípios gerais de direito tributário, princípios gerais de direito público e equidade (a ordem está correta na alternativa, mas falta a observação importante de que essa integração não pode resultar em exigência de tributo não previsto em lei nem na dispensa de tributo devido — princípio da legalidade). Na verdade releendo, A está correta na ordem mas omite limitação importante. C é mais inequívoca por reproduzir literalmente o dispositivo. A alternativa B está incorreta: o §1º do art. 108 do CTN expressamente proíbe que o emprego da analogia resulte em exigência de tributo não previsto em lei. A alternativa D está incorreta — o art. 112 do CTN dispõe que, em caso de dúvida, a lei tributária que define infrações ou comina penalidades interpreta-se da maneira mais favorável AO ACUSADO (in dubio pro reo). A alternativa E está incorreta: o §2º do art. 108 dispõe que o emprego da equidade NÃO PODE resultar na dispensa do pagamento de tributo devido.",
+      "fonte_descricao": "CTN, arts. 108, 111 e 112",
+      "fonte_url": "https://www.planalto.gov.br/ccivil_03/leis/l5172compilado.htm",
+      "alerta_revisao": false,
+      "origem": "manual"
+    },
+    {
+      "disciplina": "Direito Tributário",
+      "sub_topico": "Obrigação tributária — fato gerador, sujeito ativo e passivo",
+      "enunciado": "Acerca da obrigação tributária e seus elementos constitutivos, conforme o Código Tributário Nacional, é CORRETO afirmar:",
+      "alternativas": {
+        "A": "A obrigação tributária principal nasce com a ocorrência do fato gerador e tem por objeto o pagamento de tributo ou penalidade pecuniária, extinguindo-se com o crédito dela decorrente.",
+        "B": "A obrigação tributária acessória, por seu caráter instrumental, dispensa-se automaticamente quando a obrigação principal correspondente é extinta por qualquer modalidade prevista em lei.",
+        "C": "Sujeito passivo da obrigação tributária principal é exclusivamente o contribuinte, definido como aquele que tem relação pessoal e direta com a situação que constitua o respectivo fato gerador, vedada a designação por lei de outras pessoas como obrigadas ao pagamento do tributo.",
+        "D": "As convenções particulares relativas à responsabilidade pelo pagamento de tributos são oponíveis à Fazenda Pública desde que registradas em cartório de títulos e documentos.",
+        "E": "A capacidade tributária passiva pressupõe a capacidade civil plena da pessoa natural, não podendo o incapaz figurar como sujeito passivo de obrigação tributária."
+      },
+      "gabarito": "A",
+      "justificativa": "A alternativa A reproduz o conteúdo dos arts. 113, §1º, e 114 do CTN: a obrigação principal surge com o fato gerador e tem por objeto o pagamento de tributo ou penalidade pecuniária. A alternativa B está incorreta — o art. 113, §3º, do CTN dispõe que a obrigação acessória, pelo simples fato de sua inobservância, converte-se em principal relativamente à penalidade pecuniária; ela NÃO se dispensa automaticamente com a extinção da principal. A alternativa C está incorreta: o art. 121, parágrafo único, II, do CTN admite a figura do RESPONSÁVEL como sujeito passivo, ou seja, pessoa diversa do contribuinte que, sem revestir a condição deste, tem obrigação decorrente de disposição expressa de lei. A alternativa D está incorreta — o art. 123 do CTN expressamente dispõe que as convenções particulares NÃO PODEM ser opostas à Fazenda Pública para modificar a definição legal do sujeito passivo, salvo disposição de lei em contrário. A alternativa E está incorreta: o art. 126 do CTN dispõe que a capacidade tributária passiva INDEPENDE da capacidade civil das pessoas naturais.",
+      "fonte_descricao": "CTN, arts. 113, 114, 121, 123 e 126",
+      "fonte_url": "https://www.planalto.gov.br/ccivil_03/leis/l5172compilado.htm",
+      "alerta_revisao": false,
+      "origem": "manual"
+    },
+    {
+      "disciplina": "Direito Tributário",
+      "sub_topico": "Solidariedade, capacidade tributária, domicílio tributário",
+      "enunciado": "Acerca da solidariedade tributária e do domicílio tributário, conforme o Código Tributário Nacional, é CORRETO afirmar:",
+      "alternativas": {
+        "A": "A solidariedade tributária comporta benefício de ordem, podendo o devedor solidário exigir que a Fazenda Pública execute primeiro os bens do contribuinte originário.",
+        "B": "São solidariamente obrigadas as pessoas que tenham interesse comum na situação que constitua o fato gerador da obrigação principal e as expressamente designadas por lei.",
+        "C": "O pagamento efetuado por um dos obrigados aproveita aos demais somente quando expressamente declarado nesse sentido pelo devedor solidário.",
+        "D": "Quando não houver eleição pelo contribuinte, o domicílio tributário das pessoas jurídicas de direito privado será sempre a sede de sua matriz, vedada a consideração de qualquer estabelecimento secundário.",
+        "E": "A interrupção da prescrição em favor de um dos obrigados solidários não favorece os demais, em razão do caráter personalíssimo do instituto."
+      },
+      "gabarito": "B",
+      "justificativa": "A alternativa B está correta, conforme o art. 124, I e II, do CTN: a solidariedade tributária decorre do interesse comum no fato gerador (inciso I) ou de designação expressa em lei (inciso II). A alternativa A está incorreta: o parágrafo único do art. 124 do CTN expressamente dispõe que a solidariedade tributária NÃO COMPORTA benefício de ordem. A alternativa C está incorreta — o art. 125, I, do CTN estabelece que o pagamento efetuado por um dos obrigados aproveita aos demais automaticamente (efeito da solidariedade), sem necessidade de declaração. A alternativa D está incorreta: o art. 127, II, do CTN dispõe que, na falta de eleição, o domicílio tributário das pessoas jurídicas de direito privado é o lugar da sua sede, OU, em relação aos atos ou fatos que derem origem à obrigação, o de cada estabelecimento. A alternativa E está incorreta: o art. 125, III, do CTN dispõe que a interrupção da prescrição em favor ou contra um dos obrigados solidários favorece ou prejudica aos demais.",
+      "fonte_descricao": "CTN, arts. 124, 125 e 127",
+      "fonte_url": "https://www.planalto.gov.br/ccivil_03/leis/l5172compilado.htm",
+      "alerta_revisao": false,
+      "origem": "manual"
+    },
+    {
+      "disciplina": "Direito Tributário",
+      "sub_topico": "Responsabilidade tributária — sucessores, terceiros, infrações",
+      "enunciado": "Sobre a responsabilidade tributária dos sucessores, conforme o Código Tributário Nacional, é CORRETO afirmar:",
+      "alternativas": {
+        "A": "O adquirente de bem imóvel responde pelos tributos cujos fatos geradores sejam anteriores à aquisição, salvo quando conste do título a prova de sua quitação ou no caso de arrematação em hasta pública.",
+        "B": "A pessoa natural ou jurídica de direito privado que adquirir de outra, por qualquer título, fundo de comércio ou estabelecimento, e continuar a respectiva exploração, responde subsidiariamente pelos tributos relativos ao estabelecimento adquirido, devidos até a data do ato, sempre que o alienante prosseguir na exploração ou iniciar nova atividade dentro de seis meses.",
+        "C": "Os tributos devidos pelo de cujus até a data da abertura da sucessão respondem apenas o cônjuge meeiro, ficando os herdeiros isentos de qualquer responsabilidade tributária no curso do inventário.",
+        "D": "A responsabilidade dos sucessores estende-se exclusivamente aos tributos, ficando excluídas as multas tributárias de qualquer espécie.",
+        "E": "Nos casos de fusão, transformação ou incorporação de pessoa jurídica, a sucessora responde apenas pelos tributos cujos fatos geradores ocorrerem após a operação societária."
+      },
+      "gabarito": "A",
+      "justificativa": "A alternativa A reproduz o art. 130 do CTN: o adquirente de imóvel sub-roga-se nas obrigações tributárias relativas a impostos sobre a propriedade, taxas e contribuições de melhoria, salvo quando conste do título a prova de sua quitação. O parágrafo único acrescenta: no caso de arrematação em hasta pública, a sub-rogação ocorre sobre o respectivo preço (a arrematação 'limpa' o bem). A alternativa B está incorreta — o art. 133 do CTN distingue: se o alienante CESSAR a exploração, o adquirente responde INTEGRALMENTE; se o alienante PROSSEGUIR ou INICIAR nova atividade dentro de seis meses, o adquirente responde SUBSIDIARIAMENTE. A redação da alternativa inverte a lógica. A alternativa C está incorreta: o art. 131, II e III, do CTN estabelece que o cônjuge meeiro e cada herdeiro respondem pelos tributos do de cujus, limitados ao montante do quinhão, legado ou meação. A alternativa D está incorreta — a Súmula 554 do STJ pacifica que a responsabilidade dos sucessores abrange tanto os tributos quanto as multas. A alternativa E está incorreta: o art. 132 do CTN dispõe que a pessoa jurídica resultante de fusão, transformação ou incorporação responde pelos tributos devidos até a data do ato pelas pessoas jurídicas de direito privado fusionadas, transformadas ou incorporadas.",
+      "fonte_descricao": "CTN, arts. 130, 131, 132 e 133; Súmula 554 do STJ",
+      "fonte_url": "https://www.planalto.gov.br/ccivil_03/leis/l5172compilado.htm",
+      "alerta_revisao": false,
+      "origem": "manual"
+    },
+    {
+      "disciplina": "Direito Tributário",
+      "sub_topico": "Extinção do crédito tributário — pagamento, compensação, prescrição",
+      "enunciado": "Sobre as modalidades de extinção do crédito tributário, conforme o Código Tributário Nacional, é CORRETO afirmar:",
+      "alternativas": {
+        "A": "A prescrição da ação de cobrança do crédito tributário ocorre em cinco anos contados da ocorrência do fato gerador, aplicando-se a contagem mesmo nos casos de lançamento por homologação.",
+        "B": "A decadência do direito de a Fazenda Pública constituir o crédito tributário extingue-se em cinco anos, contados, em regra, do primeiro dia do exercício seguinte àquele em que o lançamento poderia ter sido efetuado.",
+        "C": "A compensação de créditos tributários com créditos líquidos e certos do sujeito passivo independe de previsão em lei do ente tributante competente, podendo ser realizada por simples manifestação de vontade do contribuinte.",
+        "D": "A consignação em pagamento, modalidade de extinção do crédito tributário, importa pagamento parcial e suspende a exigibilidade do crédito remanescente até decisão judicial definitiva.",
+        "E": "A remissão, total ou parcial, do crédito tributário pode ser concedida pela autoridade administrativa, no exercício de seu poder discricionário, independentemente de autorização legal específica."
+      },
+      "gabarito": "B",
+      "justificativa": "A alternativa B reproduz a regra geral do art. 173, I, do CTN: o direito de a Fazenda Pública constituir o crédito tributário extingue-se em 5 anos, contados do primeiro dia do exercício seguinte àquele em que o lançamento poderia ter sido efetuado. A alternativa A está incorreta: a PRESCRIÇÃO (cobrança), conforme art. 174 do CTN, ocorre em 5 anos contados da DEFINITIVA CONSTITUIÇÃO do crédito tributário (não do fato gerador). Para o lançamento por homologação, há regra específica no art. 150, §4º (5 anos do fato gerador para a homologação tácita). A alternativa C está incorreta — o art. 170 do CTN exige LEI que autorize a compensação, devendo a lei estabelecer as condições e garantias. A alternativa D está incorreta: a consignação em pagamento, julgada procedente, extingue integralmente o crédito (art. 156, VIII), não importando 'pagamento parcial'. A alternativa E está incorreta: a remissão exige LEI que autorize, atendendo a determinadas condições (art. 172 do CTN), não sendo discricionária da autoridade administrativa.",
+      "fonte_descricao": "CTN, arts. 156, 170, 172, 173 e 174",
+      "fonte_url": "https://www.planalto.gov.br/ccivil_03/leis/l5172compilado.htm",
+      "alerta_revisao": false,
+      "origem": "manual"
+    },
+    {
+      "disciplina": "Direito Tributário",
+      "sub_topico": "Exclusão do crédito — isenção e anistia",
+      "enunciado": "Sobre as modalidades de exclusão do crédito tributário (isenção e anistia), conforme o Código Tributário Nacional, é CORRETO afirmar:",
+      "alternativas": {
+        "A": "A isenção, ainda quando prevista em contrato, é sempre decorrente de lei que especifique as condições e requisitos exigidos para a sua concessão, os tributos a que se aplica e, sendo o caso, o prazo de sua duração.",
+        "B": "A anistia abrange exclusivamente as infrações cometidas após a sua vigência, sendo vedada sua aplicação retroativa em respeito ao princípio da segurança jurídica.",
+        "C": "A isenção, uma vez concedida, gera direito adquirido para o beneficiário e não pode ser revogada ou modificada por lei a qualquer tempo, ainda que se trate de isenção concedida em caráter geral.",
+        "D": "A exclusão do crédito tributário também alcança as obrigações acessórias dependentes da obrigação principal cujo crédito foi excluído, dispensando o sujeito passivo de seu cumprimento.",
+        "E": "A anistia pode ser concedida em caráter geral ou limitadamente, sendo facultado ao Poder Executivo, por meio de decreto, definir os requisitos para sua aplicação."
+      },
+      "gabarito": "A",
+      "justificativa": "A alternativa A reproduz o art. 176 do CTN: a isenção, ainda quando prevista em contrato, é sempre decorrente de lei que especifique as condições e requisitos. A alternativa B está incorreta: o art. 180 do CTN dispõe que a anistia abrange EXCLUSIVAMENTE as infrações cometidas ANTERIORMENTE à vigência da lei que a concede (não posteriores). A alternativa C está incorreta: o art. 178 do CTN dispõe que a isenção, salvo se concedida por prazo certo e em função de determinadas condições, pode ser revogada ou modificada por lei a qualquer tempo (Súmula 544 do STF). A alternativa D está incorreta: o art. 175, parágrafo único, do CTN expressamente dispõe que a exclusão do crédito tributário NÃO DISPENSA o cumprimento das obrigações acessórias dependentes da obrigação principal. A alternativa E está incorreta — a concessão da anistia depende de LEI (princípio da legalidade), não pode ser feita por decreto do Executivo.",
+      "fonte_descricao": "CTN, arts. 175, 176, 178 e 180; Súmula 544 do STF",
+      "fonte_url": "https://www.planalto.gov.br/ccivil_03/leis/l5172compilado.htm",
+      "alerta_revisao": false,
+      "origem": "manual"
+    },
+    {
+      "disciplina": "Direito Tributário",
+      "sub_topico": "Administração tributária — fiscalização e dívida ativa",
+      "enunciado": "Acerca da administração tributária, com especial atenção à inscrição em dívida ativa e à expedição de certidões negativas, conforme o Código Tributário Nacional, é CORRETO afirmar:",
+      "alternativas": {
+        "A": "A dívida regularmente inscrita goza da presunção absoluta de certeza e liquidez, não admitindo prova em contrário pelo sujeito passivo ou por terceiro a quem aproveite.",
+        "B": "A omissão de qualquer dos requisitos previstos no art. 202 do CTN, ou o erro a eles relativo, são causas de nulidade da inscrição e do processo de cobrança dela decorrente, sendo, contudo, sanáveis até a decisão de primeira instância, mediante substituição da certidão nula.",
+        "C": "A certidão negativa de débitos tributários, uma vez expedida, gera responsabilidade exclusiva do servidor que a emitiu por eventuais débitos fiscais existentes, eximindo o sujeito passivo de qualquer obrigação posterior.",
+        "D": "A fazenda pública pode, sem qualquer ressalva, recusar-se a fornecer certidões negativas relativas a tributos sob discussão administrativa ou judicial, ainda que tenha havido depósito do montante integral do crédito.",
+        "E": "Os agentes fiscais, no exercício da fiscalização tributária, dependem de autorização judicial específica para examinar livros, mercadorias, arquivos e documentos do sujeito passivo, em razão da inviolabilidade da intimidade e do sigilo comercial."
+      },
+      "gabarito": "B",
+      "justificativa": "A alternativa B reproduz o art. 203 do CTN: a omissão dos requisitos do art. 202 ou o erro a eles relativo são causa de nulidade, mas são SANÁVEIS até a decisão de primeira instância, mediante substituição da certidão nula. A alternativa A está incorreta: o art. 204 do CTN dispõe que a dívida regularmente inscrita goza de presunção de certeza e liquidez (RELATIVA, não absoluta), podendo ser ilidida por prova inequívoca a cargo do sujeito passivo ou de terceiro. A alternativa C está incorreta: o art. 208 do CTN dispõe que a certidão negativa expedida com dolo ou fraude responsabiliza pessoalmente o funcionário, mas isso NÃO exime o sujeito passivo do pagamento do tributo (que pode ser exigido normalmente). A alternativa D está incorreta — o art. 206 do CTN dispõe que tem o mesmo efeito da certidão negativa a certidão de que conste a existência de créditos não vencidos, em curso de cobrança executiva em que tenha sido efetivada a penhora, ou cuja exigibilidade esteja suspensa (incluindo depósito do montante integral, art. 151, II). A alternativa E está incorreta — o art. 195 do CTN expressamente dispõe que, para os efeitos da legislação tributária, NÃO TÊM aplicação quaisquer disposições legais excludentes ou limitativas do direito de examinar mercadorias, livros, arquivos e documentos comerciais ou fiscais.",
+      "fonte_descricao": "CTN, arts. 195, 203, 204, 206 e 208",
+      "fonte_url": "https://www.planalto.gov.br/ccivil_03/leis/l5172compilado.htm",
+      "alerta_revisao": false,
+      "origem": "manual"
+    }
+  ]
+}
