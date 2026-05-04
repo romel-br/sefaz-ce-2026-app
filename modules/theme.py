@@ -103,23 +103,53 @@ h3 {{ font-size: 1.4rem !important; }}
 }}
 
 /* === Botões === */
+/* Secundário (default): branco com borda navy mais grossa pra contraste */
 .stButton > button {{
     font-family: 'Inter', sans-serif !important;
     font-weight: 500 !important;
     border-radius: 6px !important;
-    border: 1px solid {COLOR_BORDER} !important;
+    border: 1.5px solid {COLOR_PRIMARY} !important;
+    color: {COLOR_PRIMARY} !important;
+    background-color: white !important;
     transition: all 0.15s ease;
 }}
 
+.stButton > button:hover:not(:disabled) {{
+    background-color: {COLOR_SAND} !important;
+    border-color: {COLOR_PRIMARY_LIGHT} !important;
+    color: {COLOR_PRIMARY_LIGHT} !important;
+}}
+
+/* Primário: navy sólido com texto branco */
 .stButton > button[kind="primary"] {{
     background-color: {COLOR_PRIMARY} !important;
     border-color: {COLOR_PRIMARY} !important;
     color: white !important;
 }}
 
-.stButton > button[kind="primary"]:hover {{
+.stButton > button[kind="primary"]:hover:not(:disabled) {{
     background-color: {COLOR_PRIMARY_LIGHT} !important;
     border-color: {COLOR_PRIMARY_LIGHT} !important;
+}}
+
+/* Estado disabled: opacidade visível mas com indicação clara de "off" */
+.stButton > button:disabled {{
+    opacity: 0.4 !important;
+    cursor: not-allowed !important;
+    border-color: {COLOR_MUTED} !important;
+    color: {COLOR_MUTED} !important;
+}}
+
+/* Form submit (login): igual ao primary */
+.stFormSubmitButton > button {{
+    background-color: {COLOR_PRIMARY} !important;
+    border: 1.5px solid {COLOR_PRIMARY} !important;
+    color: white !important;
+    font-weight: 500 !important;
+}}
+
+.stFormSubmitButton > button:hover {{
+    background-color: {COLOR_PRIMARY_LIGHT} !important;
 }}
 
 /* === Inputs === */
@@ -217,6 +247,23 @@ button[kind="headerNoPadding"][data-testid="stBaseButton-headerNoPadding"]:hover
     border-radius: 0 8px 8px 0 !important;
     padding: 8px 12px !important;
     box-shadow: 2px 2px 8px rgba(30, 58, 95, 0.25) !important;
+}}
+
+/* === Hover nos itens de navegação da sidebar (mais visível) === */
+[data-testid="stSidebar"] [data-testid="stSidebarNav"] a {{
+    color: {COLOR_PRIMARY} !important;
+    font-weight: 500 !important;
+    border-radius: 6px !important;
+    transition: background-color 0.15s ease !important;
+}}
+
+[data-testid="stSidebar"] [data-testid="stSidebarNav"] a:hover {{
+    background-color: rgba(30, 58, 95, 0.08) !important;
+}}
+
+[data-testid="stSidebar"] [data-testid="stSidebarNav"] a[aria-current="page"] {{
+    background-color: rgba(30, 58, 95, 0.12) !important;
+    font-weight: 600 !important;
 }}
 
 /* === Reduz padding superior do main pra dar mais respiro === */
